@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Masterclass Gratuita — Proteja Sua Família em 7 Dias</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:#0a0a0a;color:#fff;line-height:1.5}
+.bar{background:linear-gradient(90deg,#c00,#ff4444);color:#fff;text-align:center;padding:12px;font-weight:bold;font-size:15px;position:sticky;top:0;z-index:100}
+.hero{background:radial-gradient(circle at center,#2d4373,#0a0a0a);padding:60px 20px 40px;text-align:center}
+.tag{background:#B8860B;color:#000;display:inline-block;padding:6px 18px;border-radius:25px;font-weight:bold;font-size:13px;margin-bottom:20px}
+h1{font-size:42px;max-width:900px;margin:0 auto 15px;line-height:1.2}
+h1 span{color:#F5C542}
+.sub{font-size:20px;opacity:.9;max-width:750px;margin:0 auto 30px}
+.countdown{display:flex;justify-content:center;gap:15px;margin:25px 0;flex-wrap:wrap}
+.cbox{background:#1B2A4E;border:2px solid #B8860B;border-radius:12px;padding:15px 20px;min-width:90px}
+.cbox .num{font-size:44px;font-weight:900;color:#F5C542;display:block;line-height:1}
+.cbox .lbl{font-size:12px;opacity:.8;text-transform:uppercase;letter-spacing:2px;margin-top:5px;display:block}
+.video-wrap{max-width:900px;margin:30px auto;position:relative}
+.video{background:#000;aspect-ratio:16/9;border:3px solid #B8860B;border-radius:15px;position:relative;overflow:hidden;box-shadow:0 20px 50px rgba(184,134,11,.3)}
+.video video{width:100%;height:100%;object-fit:cover;display:block}
+.live-dot{position:absolute;top:15px;left:15px;background:#c00;color:#fff;padding:5px 12px;border-radius:20px;font-size:13px;font-weight:bold;display:flex;align-items:center;gap:6px;z-index:5}
+.live-dot::before{content:"";width:8px;height:8px;background:#fff;border-radius:50%;animation:blink 1s infinite}
+@keyframes blink{50%{opacity:.3}}
+.watching{position:absolute;bottom:15px;right:15px;background:rgba(0,0,0,.7);color:#fff;padding:6px 12px;border-radius:15px;font-size:13px;z-index:5}
+.unmute-btn{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);background:rgba(184,134,11,.95);color:#000;border:none;padding:14px 28px;border-radius:50px;font-size:16px;font-weight:bold;cursor:pointer;z-index:10;display:none;box-shadow:0 10px 25px rgba(0,0,0,.5)}
+.form-section{max-width:550px;margin:20px auto 40px;background:#1B2A4E;padding:35px 25px;border-radius:15px;border:2px solid #B8860B;box-shadow:0 15px 40px rgba(0,0,0,.5)}
+.form-section h3{text-align:center;font-size:22px;margin-bottom:8px;color:#F5C542}
+.form-section p{text-align:center;font-size:14px;opacity:.85;margin-bottom:20px}
+.form-section input,.form-section select{width:100%;padding:15px;margin:8px 0;border:none;border-radius:8px;font-size:16px;background:#fff;color:#1B2A4E}
+.form-section button{width:100%;background:linear-gradient(135deg,#B8860B,#F5C542);color:#000;border:none;padding:18px;font-size:18px;font-weight:900;border-radius:50px;cursor:pointer;margin-top:15px;box-shadow:0 10px 25px rgba(245,197,66,.4);animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.03)}}
+.benefits{background:#111;padding:60px 20px}
+.benefits h2{text-align:center;font-size:30px;margin-bottom:40px;color:#F5C542}
+.bgrid{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:20px}
+.bcard{background:#1a1a1a;padding:25px;border-radius:12px;border-left:4px solid #B8860B}
+.bcard .icon{font-size:40px;margin-bottom:10px;display:block}
+.bcard h4{color:#F5C542;font-size:18px;margin-bottom:8px}
+.host{background:linear-gradient(135deg,#1B2A4E,#0a0a0a);padding:50px 20px;text-align:center}
+.host .photo{width:140px;height:140px;border-radius:50%;background:#B8860B;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-size:60px;border:4px solid #F5C542}
+.host h3{font-size:24px;color:#F5C542;margin-bottom:10px}
+.host p{max-width:600px;margin:0 auto;opacity:.9}
+.proof{background:#111;padding:50px 20px}
+.proof h2{text-align:center;font-size:26px;margin-bottom:30px;color:#F5C542}
+.chat-fake{max-width:500px;margin:0 auto;background:#1a1a1a;border-radius:12px;padding:20px}
+.msg{display:flex;gap:10px;margin:12px 0;font-size:14px;animation:slideIn .5s}
+@keyframes slideIn{from{opacity:0;transform:translateX(-20px)}to{opacity:1;transform:translateX(0)}}
+.avatar{width:36px;height:36px;border-radius:50%;background:#B8860B;flex-shrink:0;display:flex;align-items:center;justify-content:center;font-weight:bold;font-size:14px;color:#000}
+.msg .txt{background:#2a2a2a;padding:8px 12px;border-radius:10px}
+.msg .txt b{color:#F5C542}
+.final-cta{background:#B8860B;padding:50px 20px;text-align:center}
+.final-cta h2{font-size:32px;color:#000;margin-bottom:15px}
+.final-cta a{display:inline-block;background:#1B2A4E;color:#fff;padding:20px 50px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:19px;margin-top:15px}
+footer{background:#000;padding:25px;text-align:center;font-size:12px;color:#666}
+
+/* Conteúdo bloqueado até 60% da VSL */
+.locked{display:none}
+.locked.revealed{display:block;animation:fadeReveal .8s ease-out}
+@keyframes fadeReveal{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:600px){h1{font-size:30px}.sub{font-size:16px}.cbox{padding:10px 14px;min-width:70px}.cbox .num{font-size:32px}}
+</style></head><body>
+
+
+<div class="bar">⚠ ATENÇÃO: Masterclass encerra em breve — poucas vagas restantes</div>
+
+
+<section class="hero">
+<div class="tag">🔴 TRANSMISSÃO EXCLUSIVA · 100% GRATUITA</div>
+<h1>Como Levantar <span>Muros Invisíveis</span> em Torno da Sua Família em 7 Dias</h1>
+<p class="sub">Masterclass gratuita de 45 minutos revelando o método bíblico que milhares de famílias cristãs estão usando para proteger lar, casamento, filhos e finanças.</p>
+
+
+<div class="countdown" id="cd">
+<div class="cbox"><span class="num" id="d">00</span><span class="lbl">Dias</span></div>
+<div class="cbox"><span class="num" id="h">00</span><span class="lbl">Horas</span></div>
+<div class="cbox"><span class="num" id="m">00</span><span class="lbl">Minutos</span></div>
+<div class="cbox"><span class="num" id="sec">00</span><span class="lbl">Seg</span></div>
+</div>
+
+
+<div class="video-wrap">
+<div class="video">
+<div class="live-dot">AO VIVO</div>
+<video id="vsl" src="media\0ccbc4d7-e278-48ca-9e9d-afd89e49df2e.mp4" autoplay muted playsinline preload="auto"></video>
+<button class="unmute-btn" id="unmuteBtn">🔊 CLIQUE PARA ATIVAR O SOM</button>
+<div class="watching">👥 <span id="watching">1.247</span> assistindo</div>
+</div>
+</div>
+
+
+<div class="form-section locked" id="form">
+<h3>🎟 Garanta sua vaga agora</h3>
+<p>Clique abaixo para receber o link da masterclass + material de apoio no WhatsApp</p>
+<form>
+<input type="text" placeholder="Seu primeiro nome" required>
+<input type="email" placeholder="Seu melhor e-mail" required>
+<input type="tel" placeholder="WhatsApp com DDD" required>
+<select required>
+<option value="">Quando quer assistir?</option>
+<option>Começar AGORA (próxima sessão em poucos minutos)</option>
+<option>Hoje à noite às 20h</option>
+<option>Amanhã às 10h da manhã</option>
+</select>
+<button type="submit">🔴 QUERO MINHA VAGA GRATUITA →</button>
+<p style="font-size:11px;margin-top:10px">🔒 Zero spam · 100% seguro</p>
+</form>
+</div>
+</section>
+
+
+<section class="benefits locked">
+<h2>O que você vai aprender nesta masterclass</h2>
+<div class="bgrid">
+<div class="bcard"><span class="icon">🛡️</span><h4>Os 5 sinais de brecha espiritual</h4><p>Identifique exatamente por onde o inimigo entra na sua casa — e como fechar cada porta com oração bíblica.</p></div>
+<div class="bcard"><span class="icon">🙏</span><h4>A oração de 7 minutos que muda tudo</h4><p>O método de intercessão diária que pastores experientes ensinam só para círculos fechados.</p></div>
+<div class="bcard"><span class="icon">👨‍👩‍👧</span><h4>Como orar pelos filhos rebeldes</h4><p>A estrutura exata que reaproxima filhos que se afastaram de Deus.</p></div>
+<div class="bcard"><span class="icon">🏠</span><h4>Consagração do lar em 15 min</h4><p>Passo a passo para consagrar sua casa cômodo por cômodo neste mesmo fim de semana.</p></div>
+<div class="bcard"><span class="icon">💰</span><h4>Finanças cristãs protegidas</h4><p>Princípios bíblicos para administrar o que Deus te deu sem cair em golpes.</p></div>
+<div class="bcard"><span class="icon">🎁</span><h4>BÔNUS ao final</h4><p>Uma oferta exclusiva disponível SÓ para quem assistir até o fim da transmissão.</p></div>
+</div>
+</section>
+
+
+<section class="host locked">
+<div class="photo">✝</div>
+<h3>Ministrado por — Equipe Família Sob a Graça</h3>
+<p>Mais de 12.000 famílias cristãs alcançadas · Conteúdo 100% bíblico · Sem misticismo, sem fanatismo. Apenas a Palavra aplicada de forma prática.</p>
+</section>
+
+
+<section class="proof locked">
+<h2>💬 O que estão comentando na transmissão</h2>
+<div class="chat-fake" id="chat">
+<div class="msg"><div class="avatar">C</div><div class="txt"><b>Cleide G.</b><br>Emocionada! Finalmente entendi onde estava a brecha da minha casa 🙏</div></div>
+<div class="msg"><div class="avatar">A</div><div class="txt"><b>Antônio S.</b><br>Tomei nota de tudo. Vou aplicar com minha esposa ainda hoje.</div></div>
+<div class="msg"><div class="avatar">M</div><div class="txt"><b>Márcia L.</b><br>Já estou chorando com a parte dos filhos rebeldes. Deus abençoe 💙</div></div>
+<div class="msg"><div class="avatar">J</div><div class="txt"><b>José R.</b><br>Nunca tinha ouvido nada tão claro sobre proteção da família.</div></div>
+</div>
+</section>
+
+
+<section class="final-cta locked">
+<h2>Não deixe a sua vaga escapar</h2>
+<p style="font-size:17px;color:#000;max-width:600px;margin:0 auto">As vagas são limitadas e a transmissão começa em breve. Cadastre-se agora e receba o link direto no WhatsApp.</p>
+<a href="#form">GARANTIR MINHA VAGA AGORA →</a>
+</section>
+
+
+<footer>© 2026 Família Sob a Graça · Este webinar é uma aula online gratuita · Nenhuma promessa de resultado específico é feita</footer>
+
+
+<script>
+// VSL — autoplay com mute + botão para ativar som
+const vsl=document.getElementById('vsl');
+const unmuteBtn=document.getElementById('unmuteBtn');
+vsl.addEventListener('loadeddata',()=>{
+  const p=vsl.play();
+  if(p!==undefined){p.then(()=>{unmuteBtn.style.display='block';}).catch(()=>{unmuteBtn.style.display='block';});}
+});
+unmuteBtn.addEventListener('click',()=>{
+  vsl.muted=false;
+  vsl.volume=1;
+  vsl.play();
+  unmuteBtn.style.display='none';
+});
+
+// 🔓 Revelar conteúdo somente após 60% da VSL assistida
+let revealed=false;
+function revealAll(){
+  if(revealed) return;
+  revealed=true;
+  document.querySelectorAll('.locked').forEach(el=>el.classList.add('revealed'));
+}
+vsl.addEventListener('timeupdate',()=>{
+  if(!vsl.duration||isNaN(vsl.duration)) return;
+  const progress=vsl.currentTime/vsl.duration;
+  if(progress>=0.6) revealAll();
+});
+// Fallback: se o vídeo terminar antes (loop/curto), revela
+vsl.addEventListener('ended',revealAll);
+
+
+// Countdown para próxima sessão automática (a cada hora cheia)
+function upd(){
+  const n=new Date();
+  const next=new Date(n);
+  next.setHours(n.getHours()+1,0,0,0);
+  const diff=next-n;
+  const h=Math.floor(diff/3600000);
+  const m=Math.floor((diff%3600000)/60000);
+  const s=Math.floor((diff%60000)/1000);
+  document.getElementById('d').textContent='00';
+  document.getElementById('h').textContent=String(h).padStart(2,'0');
+  document.getElementById('m').textContent=String(m).padStart(2,'0');
+  document.getElementById('sec').textContent=String(s).padStart(2,'0');
+}
+upd();setInterval(upd,1000);
+
+
+// Simulador de audiência ao vivo
+setInterval(()=>{
+  const base=1200+Math.floor(Math.random()*200);
+  document.getElementById('watching').textContent=base.toLocaleString('pt-BR');
+},3500);
+
+
+// Mensagens do chat rolando
+const mensagens=[
+  ['Paulo H.','Que mensagem poderosa! 🔥'],
+  ['Regina M.','Salvei esse link, vou chamar meu marido agora'],
+  ['Carlos A.','Deus é tão bom, chegou na hora certa'],
+  ['Lúcia B.','Estou impressionada com a clareza'],
+  ['Pedro F.','Já me inscrevi, preciso disso na minha casa'],
+  ['Sandra T.','Glória a Deus, obrigada demais ❤'],
+  ['Fátima J.','Vou começar hoje mesmo 🙏'],
+];
+let idx=0;
+setInterval(()=>{
+  const m=mensagens[idx%mensagens.length];idx++;
+  const div=document.createElement('div');div.className='msg';
+  div.innerHTML='<div class="avatar">'+m[0][0]+'</div><div class="txt"><b>'+m[0]+'</b><br>'+m[1]+'</div>';
+  const chatEl=document.getElementById('chat');
+  if(!chatEl) return;
+  chatEl.appendChild(div);
+  if(chatEl.children.length>6) chatEl.children[0].remove();
+},4000);
+</script>
+</body></html>

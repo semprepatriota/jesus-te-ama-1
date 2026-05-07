@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Qual o Nível de Proteção Espiritual da Sua Família?</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial,sans-serif}
+body{background:linear-gradient(135deg,#1B2A4E,#2d4373);min-height:100vh;color:#fff;padding:20px;display:flex;align-items:center;justify-content:center}
+.quiz{background:#fff;color:#1B2A4E;max-width:680px;width:100%;border-radius:20px;box-shadow:0 25px 60px rgba(0,0,0,.4);overflow:hidden}
+.header{background:#B8860B;color:#fff;padding:25px;text-align:center}
+.header h1{font-size:24px;margin-bottom:5px}
+.header p{opacity:.9;font-size:14px}
+.progress{background:#eee;height:8px;overflow:hidden}
+.bar{background:#B8860B;height:100%;width:0;transition:width .4s}
+.step{padding:40px 30px;display:none}
+.step.active{display:block}
+.step h2{font-size:24px;margin-bottom:25px;color:#1B2A4E}
+.opt{display:block;background:#FAF6EE;padding:18px 20px;margin:10px 0;border-radius:10px;cursor:pointer;border:2px solid transparent;transition:all .2s;font-size:16px}
+.opt:hover{border-color:#B8860B;background:#fff7e6}
+.opt.selected{border-color:#B8860B;background:#B8860B;color:#fff}
+.nav{display:flex;justify-content:space-between;margin-top:25px}
+.btn{background:#B8860B;color:#fff;border:none;padding:14px 35px;border-radius:8px;font-size:16px;font-weight:bold;cursor:pointer}
+.btn:disabled{background:#ccc;cursor:not-allowed}
+.btn.sec{background:#eee;color:#1B2A4E}
+#form-step input{width:100%;padding:14px;margin:8px 0;border:2px solid #ddd;border-radius:8px;font-size:16px}
+#form-step input:focus{outline:none;border-color:#B8860B}
+#result{display:none;padding:40px 30px;text-align:center}
+#result .score{font-size:80px;color:#B8860B;font-weight:900;margin:20px 0}
+#result .level{font-size:28px;font-weight:bold;margin:10px 0}
+#result .msg{background:#FAF6EE;padding:20px;border-radius:10px;margin:25px 0;text-align:left;line-height:1.7}
+#result .offer{background:linear-gradient(135deg,#B8860B,#F5C542);color:#000;padding:30px;border-radius:15px;margin-top:30px}
+#result .offer h3{font-size:26px;margin-bottom:10px}
+#result .offer .price{font-size:42px;font-weight:900;margin:15px 0}
+#result .offer s{color:#555;font-size:18px}
+.cta-final{display:inline-block;background:#1B2A4E;color:#fff;padding:18px 40px;border-radius:50px;text-decoration:none;font-weight:bold;font-size:18px;margin-top:15px;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.05)}}
+.verse{font-style:italic;color:#B8860B;margin:20px 0;font-size:15px}
+.counter{text-align:center;font-size:13px;color:#777;padding:10px}
+</style></head><body>
+
+<div class="quiz">
+<div class="header">
+<h1>🛡️ Qual o nível de proteção espiritual da sua família?</h1>
+<p>Quiz bíblico de 7 perguntas · Leva 2 minutos · Resultado personalizado</p>
+</div>
+
+<div class="progress"><div class="bar" id="bar"></div></div>
+<div class="counter" id="counter">Pergunta 1 de 8</div>
+
+<div class="step active" data-step="1">
+<h2>1. Com que frequência você ora pela sua família nominalmente (cada pessoa)?</h2>
+<div class="opt" data-v="3">Todos os dias, de manhã e à noite</div>
+<div class="opt" data-v="2">Algumas vezes por semana</div>
+<div class="opt" data-v="1">Raramente, só quando tem crise</div>
+<div class="opt" data-v="0">Quase nunca</div>
+</div>
+
+<div class="step" data-step="2">
+<h2>2. Existe um devocional ou leitura bíblica em família na sua casa?</h2>
+<div class="opt" data-v="3">Sim, toda semana</div>
+<div class="opt" data-v="2">Às vezes, quando dá</div>
+<div class="opt" data-v="1">Já tentei, mas não dura</div>
+<div class="opt" data-v="0">Nunca tivemos</div>
+</div>
+
+<div class="step" data-step="3">
+<h2>3. Sua casa já foi consagrada em oração (cômodo por cômodo)?</h2>
+<div class="opt" data-v="3">Sim, e repito periodicamente</div>
+<div class="opt" data-v="2">Sim, uma vez só</div>
+<div class="opt" data-v="1">Não, mas gostaria de fazer</div>
+<div class="opt" data-v="0">Nunca pensei nisso</div>
+</div>
+
+<div class="step" data-step="4">
+<h2>4. Como está a paz dentro do seu lar nos últimos 3 meses?</h2>
+<div class="opt" data-v="3">Paz constante, conflitos raros</div>
+<div class="opt" data-v="2">Altos e baixos normais</div>
+<div class="opt" data-v="1">Bastante tensão e discussões</div>
+<div class="opt" data-v="0">Crise pesada, sinto algo errado</div>
+</div>
+
+<div class="step" data-step="5">
+<h2>5. Seus filhos ou netos estão firmes na fé?</h2>
+<div class="opt" data-v="3">Sim, caminham com Deus</div>
+<div class="opt" data-v="2">Vão à igreja, mas sem profundidade</div>
+<div class="opt" data-v="1">Estão distantes, me preocupam</div>
+<div class="opt" data-v="0">Abandonaram a fé completamente</div>
+</div>
+
+<div class="step" data-step="6">
+<h2>6. Como estão suas finanças à luz dos princípios bíblicos?</h2>
+<div class="opt" data-v="3">Organizadas, com dízimo e reserva</div>
+<div class="opt" data-v="2">Ok, mas poderiam melhorar</div>
+<div class="opt" data-v="1">Apertadas, vivo preocupado</div>
+<div class="opt" data-v="0">Caóticas, medo de golpe ou dívida</div>
+</div>
+
+<div class="step" data-step="7">
+<h2>7. Você sente que há alguma "brecha espiritual" aberta no seu lar?</h2>
+<div class="opt" data-v="3">Não, sinto proteção constante</div>
+<div class="opt" data-v="2">Às vezes sinto algo pesado</div>
+<div class="opt" data-v="1">Sim, frequentemente</div>
+<div class="opt" data-v="0">Sim, e não sei como fechar</div>
+</div>
+
+<div class="step" data-step="8" id="form-step">
+<h2>🎁 Receba seu diagnóstico + plano de ação personalizado</h2>
+<p style="margin-bottom:20px;color:#555">Preencha abaixo para ver seu resultado e receber o plano de 7 dias no WhatsApp:</p>
+<input type="text" id="nome" placeholder="Seu primeiro nome" required>
+<input type="email" id="email" placeholder="Seu melhor e-mail" required>
+<input type="tel" id="whats" placeholder="WhatsApp (com DDD)" required>
+<p style="font-size:12px;color:#888;margin-top:10px">🔒 Seus dados estão seguros. Não enviamos spam.</p>
+</div>
+
+<div style="padding:0 30px 30px">
+<div class="nav">
+<button class="btn sec" id="prev" disabled>← Voltar</button>
+<button class="btn" id="next" disabled>Avançar →</button>
+</div>
+</div>
+
+<div id="result">
+<h2>Seu diagnóstico espiritual</h2>
+<div class="score" id="score">0</div>
+<div class="level" id="level"></div>
+<p class="verse" id="verse"></p>
+<div class="msg" id="msg"></div>
+
+<div class="offer">
+<h3>🛡️ Plano Completo Recomendado</h3>
+<p>Com base no seu resultado, recomendamos o <strong>Kit Família Sob a Graça</strong> — 4 ferramentas integradas para elevar seu nível de proteção.</p>
+<p><s>De R$ 1.129</s></p>
+<div class="price">R$ 197</div>
+<p>ou 12x de R$ 19,76</p>
+<a href="https://pay.hotmart.com/SEULINK" class="cta-final">QUERO MEU KIT AGORA →</a>
+</div>
+
+<p style="margin-top:20px;font-size:13px;color:#777">✔ Acesso imediato  ✔ 7 dias de garantia  ✔ Bônus: Grupo VIP WhatsApp</p>
+</div>
+</div>
+
+<script>
+let current=1, total=8, answers=[];
+const bar=document.getElementById('bar'), counter=document.getElementById('counter');
+const next=document.getElementById('next'), prev=document.getElementById('prev');
+
+document.querySelectorAll('.opt').forEach(o=>{
+  o.addEventListener('click',()=>{
+    o.parentElement.querySelectorAll('.opt').forEach(x=>x.classList.remove('selected'));
+    o.classList.add('selected');
+    next.disabled=false;
+  });
+});
+
+function show(n){
+  document.querySelectorAll('.step').forEach(s=>s.classList.remove('active'));
+  document.querySelector('[data-step="'+n+'"]').classList.add('active');
+  bar.style.width=(n/total*100)+'%';
+  counter.textContent='Pergunta '+n+' de '+total;
+  prev.disabled=(n===1);
+  const sel=document.querySelector('[data-step="'+n+'"] .opt.selected');
+  const formOk=(n===8)&&document.getElementById('nome').value&&document.getElementById('email').value&&document.getElementById('whats').value;
+  next.disabled=!(sel||formOk);
+  next.textContent=(n===total)?'VER MEU RESULTADO →':'Avançar →';
+}
+
+next.addEventListener('click',()=>{
+  if(current<total){
+    const sel=document.querySelector('[data-step="'+current+'"] .opt.selected');
+    if(sel) answers.push(parseInt(sel.dataset.v));
+    current++;
+    show(current);
+  } else {
+    showResult();
+  }
+});
+prev.addEventListener('click',()=>{if(current>1){current--;answers.pop();show(current);}});
+
+['nome','email','whats'].forEach(id=>{
+  const el=document.getElementById(id);
+  if(el) el.addEventListener('input',()=>show(current));
+});
+
+function showResult(){
+  document.querySelector('.quiz').querySelectorAll('.step,.nav,.progress,.counter,.header').forEach(e=>e.style.display='none');
+  const r=document.getElementById('result');r.style.display='block';
+  const sum=answers.reduce((a,b)=>a+b,0);
+  const max=7*3;
+  const pct=Math.round(sum/max*100);
+  document.getElementById('score').textContent=pct+'%';
+  let lvl,msg,verse;
+  if(pct>=75){lvl='🟢 PROTEÇÃO FORTE';verse='"Eu e a minha casa serviremos ao Senhor." — Josué 24:15';msg='Sua família tem uma base espiritual sólida. Continue firme, mas lembre-se: manter exige renovação constante. O Kit Família Sob a Graça vai te ajudar a sistematizar o que você já faz e elevar ainda mais.';}
+  else if(pct>=50){lvl='🟡 PROTEÇÃO MÉDIA';verse='"Vigiai e orai, para que não entreis em tentação." — Mateus 26:41';msg='Há intenção e fé, mas faltam estrutura e constância. Pequenas brechas estão abertas. Com o método certo, em 30 dias você eleva o nível para proteção forte.';}
+  else if(pct>=25){lvl='🟠 PROTEÇÃO FRACA';verse='"Se o Senhor não guardar a cidade, em vão vigia a sentinela." — Salmos 127:1';msg='Atenção: várias brechas espirituais identificadas. Sua família precisa de um plano urgente de reconstrução — oração intencional, devocional em família e cobertura espiritual diária.';}
+  else {lvl='🔴 PROTEÇÃO CRÍTICA';verse='"Clamei ao Senhor na minha angústia, e ele me ouviu." — Salmos 120:1';msg='Quadro crítico. É hora de agir agora. Não se desespere — Deus está pronto para restaurar. Comece hoje com o Kit Família Sob a Graça: é o passo a passo completo que sua família precisa.';}
+  document.getElementById('level').textContent=lvl;
+  document.getElementById('verse').textContent=verse;
+  document.getElementById('msg').innerHTML=msg;
+}
+</script>
+</body></html>
