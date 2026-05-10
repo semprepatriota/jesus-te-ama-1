@@ -92,11 +92,15 @@ n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;
 n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;
 t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,
 document,'script','https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', 'SEU_PIXEL_ID');
-fbq('track', 'CompleteRegistration', {content_name: 'isca_7_oracoes'});
+// Substitua 'SEU_PIXEL_ID' pelo ID real do Meta Pixel
+if(typeof fbq !== 'undefined') {
+  fbq('init', 'SEU_PIXEL_ID');
+  fbq('track', 'CompleteRegistration', {content_name: 'isca_7_oracoes'});
+}
 </script>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXX"></script>
 <script>
+  // Substitua 'G-XXXXXXX' pelo ID real do Google Analytics
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date()); gtag('config', 'G-XXXXXXX');
@@ -242,7 +246,7 @@ fbq('track', 'CompleteRegistration', {content_name: 'isca_7_oracoes'});
           </li>
         </ul>
 
-        <a href="../kit_fe_familia/funil_html_v2/index.html" data-event="click_cta_oferta_kit"
+        <a href="./index.html" data-event="click_cta_oferta_kit"
            class="btn btn-paper">
           Ver o método completo →
         </a>
