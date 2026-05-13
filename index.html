@@ -271,8 +271,7 @@ img{max-width:100%;height:auto;display:block}
     whats:"5511999999999",                                // SEU WhatsApp (DDI+DDD+número) - ATUALIZE!
     webhook:"",                                           // opcional: URL do webhook para capturar leads
     pixelId:"",                                           // opcional: Meta Pixel ID
-    manualUrl:"https://hfnew.com.br/kit-familia-sob-a-graca/LP6_vls1.html"
-    "   // ATUALIZE: link do Manual Espiritual Familiar
+    manualUrl:"kit-familia-sob-a-graca/LP6_vls1.html"   // Link para LP6 - Masterclass
   };
   const TOTAL=8;
 
@@ -424,13 +423,9 @@ img{max-width:100%;height:auto;display:block}
     const msg=encodeURIComponent(`Olá! Sou ${lead.nome}. Acabei de fazer o quiz e quero as 7 Orações de Proteção Familiar.`);
     $("#whatsOpen").href=`https://wa.me/${CFG.whats}?text=${msg}`;
 
-    // Botão Manual Espiritual Familiar (com UTMs preservadas)
-    const manualLink=new URL(CFG.manualUrl);
-    new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
-    manualLink.searchParams.set("src","quiz_sucesso");
-    manualLink.searchParams.set("lead",encodeURIComponent(lead.nome));
+    // Botão Manual Espiritual Familiar
     const manualBtn=$("#manualBtn");
-    manualBtn.href=manualLink.toString();
+    manualBtn.href=CFG.manualUrl;
     manualBtn.target="_blank";
     manualBtn.rel="noopener";
     manualBtn.addEventListener("click",()=>{
