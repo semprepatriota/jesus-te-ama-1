@@ -37,17 +37,18 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://n8n.alphamanager.cloud" crossorigin>
 <link rel="dns-prefetch" href="https://wa.me">
 <link rel="dns-prefetch" href="https://pay.hotmart.com">
+<link rel="dns-prefetch" href="https://n8n.alphamanager.cloud">
 
 <style>
 :root{--navy:#1B2A4E;--navy2:#2d4373;--gold:#B8860B;--gold2:#F5C542;--cream:#FAF6EE;--green:#25D366;--red:#e74c3c;--gray:#777;--text:#1B2A4E;--radius:12px;--radius-lg:20px;--shadow:0 25px 60px rgba(0,0,0,.35);--ease:.25s cubic-bezier(.4,0,.2,1)}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+,::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{font-family:system-ui,-apple-system,"Segoe UI",Roboto,Arial,sans-serif;background:linear-gradient(135deg,var(--navy),var(--navy2));min-height:100dvh;color:#fff;padding:20px;display:grid;place-items:center;line-height:1.5;-webkit-font-smoothing:antialiased;text-rendering:optimizeSpeed}
 button{font:inherit;cursor:pointer;border:0;background:none;color:inherit}
 button:disabled{cursor:not-allowed}
 input{font:inherit;width:100%}
 img{max-width:100%;height:auto;display:block}
-@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+@media (prefers-reduced-motion:reduce){,::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
 
 .quiz{background:#fff;color:var(--text);max-width:680px;width:100%;border-radius:var(--radius-lg);box-shadow:var(--shadow);overflow:hidden;contain:layout style}
 .header{background:var(--gold);color:#fff;padding:24px 22px;text-align:center;contain:layout style}
@@ -190,7 +191,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <p>As <strong>7 Orações de Proteção Familiar</strong> foram enviadas para o seu WhatsApp agora mesmo.</p>
 
     <div class="success-box">
-      ⏱ <strong>Chega em até 60 segundos.</strong><br>
+      ⏱️ <strong>Chega em até 60 segundos.</strong><br>
       Se não receber, verifique se salvou nosso número na agenda.
     </div>
 
@@ -291,7 +292,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     whats:"5544998731245",
     webhook:"https://n8n.alphamanager.cloud/webhook/4567972c-b6d8-4c77-87ed-6b619d9a1ef0",
     pixelId:"",
-    manualUrl:"https://pay.hotmart.com/SEU_LINK_MANUAL"
+    manualUrl:"LP6_vls1.html"
   };
   const TOTAL=8;
 
@@ -338,7 +339,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const pct=(current/TOTAL)*100;
     bar.style.width=pct+"%";
     progressEl.setAttribute("aria-valuenow",Math.round(pct));
-    counter.textContent=current<TOTAL?`Pergunta ${current} de 7`:"Último passo — liberação do material";
+    counter.textContent=current<TOTAL?"Pergunta "+current+" de 7":"Último passo — liberação do material";
     prev.disabled=current===1;
     if(current===TOTAL){
       next.textContent="RECEBER MINHAS 7 ORAÇÕES →";
@@ -358,10 +359,11 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   const onlyDigits=v=>v.replace(/\D+/g,"");
 
-  // Formata WhatsApp no padrão 55DDDNÚMERO (ex: 5511987654321)
+  // Formata WhatsApp no padrão internacional: 55 + DDD + número (ex: 5511987654321)
   function formatWhatsInternational(v){
     let d=onlyDigits(v);
-    if(d.startsWith("55")&&d.length>11) d=d.slice(2);
+    if(d.startsWith("55")) d=d.slice(2);
+    if(d.length===10||d.length===11) return "55"+d;
     return "55"+d;
   }
 
@@ -369,11 +371,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const d=onlyDigits(v).slice(0,11);
     if(!d) return "";
     if(d.length<=2) return "("+d;
-    if(d.length<=6) return `(${d.slice(0,2)}) ${d.slice(2)}`;
-    if(d.length<=10)return `(${d.slice(0,2)}) ${d.slice(2,6)}-${d.slice(6)}`;
-    return `(${d.slice(0,2)}) ${d.slice(2,7)}-${d.slice(7)}`;
+    if(d.length<=6) return "("+d.slice(0,2)+") "+d.slice(2);
+    if(d.length<=10) return "("+d.slice(0,2)+") "+d.slice(2,6)+"-"+d.slice(6);
+    return "("+d.slice(0,2)+") "+d.slice(2,7)+"-"+d.slice(7);
   }
-  const validWhats=v=>{const d=onlyDigits(v);return (d.length===11&&d[2]==="9")||d.length===10;};
+  // Válido: 10 dígitos (fixo) ou 11 dígitos (celular com 9) - com DDD
+  const validWhats=v=>{const d=onlyDigits(v);return d.length===10||d.length===11;};
   const validEmail=v=>!v||/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v);
 
   whats.addEventListener("input",e=>{e.target.value=maskWhats(e.target.value);validateForm();},{passive:true});
@@ -405,48 +408,28 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     return all;
   }
 
-  // ============ POST para o webhook n8n ============
+  // POST para o webhook n8n
   async function postWebhook(payload){
-    if(!CFG.webhook){console.warn("[webhook] URL não configurada");return false;}
+    if(!CFG.webhook) return false;
     const body=JSON.stringify(payload);
-    console.log("[webhook] POST →",CFG.webhook,payload);
-
-    // Tenta fetch com CORS primeiro (para ver erros no console)
     try{
       const res=await fetch(CFG.webhook,{
         method:"POST",
-        headers:{"Content-Type":"application/json","Accept":"application/json"},
-        body,
-        keepalive:true
-      });
-      console.log("[webhook] status:",res.status);
-      return true;
-    }catch(err){
-      console.warn("[webhook] fetch CORS falhou, tentando no-cors:",err);
-    }
-
-    // Fallback 1: fetch no-cors (navegador não lê a resposta, mas n8n recebe)
-    try{
-      await fetch(CFG.webhook,{
-        method:"POST",
-        mode:"no-cors",
         headers:{"Content-Type":"application/json"},
         body,
-        keepalive:true
+        keepalive:true,
+        mode:"cors"
       });
-      console.log("[webhook] no-cors enviado");
+      if(!res.ok) throw new Error(`Webhook error: ${res.status}`);
+      await res.text().catch(()=>"");
       return true;
     }catch(err){
-      console.warn("[webhook] no-cors falhou:",err);
-    }
-
-    // Fallback 2: sendBeacon
-    try{
-      const ok=navigator.sendBeacon(CFG.webhook,new Blob([body],{type:"application/json"}));
-      console.log("[webhook] sendBeacon:",ok);
-      return ok;
-    }catch(err){
-      console.error("[webhook] sendBeacon falhou:",err);
+      console.warn("Webhook POST failed, attempting sendBeacon fallback",err);
+      try{
+        navigator.sendBeacon&&navigator.sendBeacon(CFG.webhook,body);
+      }catch(e){
+        console.error("Beacon fallback also failed",e);
+      }
       return false;
     }
   }
@@ -472,70 +455,18 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       utm:Object.fromEntries(new URLSearchParams(location.search)),
       data:new Date().toISOString(),
       origem:location.href,
+      timestamp:Date.now(),
       ua:navigator.userAgent
     };
 
     leadCache=lead;
     try{localStorage.setItem("fsg_lead",JSON.stringify(lead))}catch{}
 
-    // Aguarda o POST (com timeout de 8s) antes de mostrar sucesso
+    const webhookPromise=postWebhook(lead);
+    if(typeof fbq==="function") fbq("track","Lead");
     await Promise.race([
-      postWebhook(lead),
+      webhookPromise,
       new Promise(r=>setTimeout(r,8000))
     ]);
-
-    if(typeof fbq==="function") fbq("track","Lead");
-
     next.classList.remove("btn-loading");
     showSuccess(lead);
-  }
-
-  function showSuccess(lead){
-    [...document.querySelectorAll(".step, .nav, .progress, .counter, .header")].forEach(el=>el.style.display="none");
-    success.hidden=false;
-    success.style.display="block";
-    $("#successTitle").textContent=`Pronto, ${lead.nome}! Seu material está a caminho.`;
-
-    const msg=encodeURIComponent(`Olá! Sou ${lead.nome}. Acabei de fazer o quiz e quero as 7 Orações de Proteção Familiar.`);
-    $("#whatsOpen").href=`https://wa.me/${CFG.whats}?text=${msg}`;
-
-    const manualLink=new URL(CFG.manualUrl);
-    new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
-    manualLink.searchParams.set("src","quiz_sucesso");
-    manualLink.searchParams.set("lead",encodeURIComponent(lead.nome));
-    const manualBtn=$("#manualBtn");
-    manualBtn.href=manualLink.toString();
-    manualBtn.target="_blank";
-    manualBtn.rel="noopener";
-
-    manualBtn.addEventListener("click",()=>{
-      const payload={
-        ...(leadCache||lead),
-        evento:"ebook_click",
-        destino:manualLink.toString(),
-        data:new Date().toISOString()
-      };
-      postWebhook(payload);
-      if(typeof fbq==="function") fbq("track","InitiateCheckout",{content_name:"Manual Espiritual Familiar"});
-    },{passive:true});
-
-    success.scrollIntoView({behavior:"smooth",block:"start"});
-  }
-
-  if(CFG.pixelId){
-    if("requestIdleCallback"in window) requestIdleCallback(loadPixel,{timeout:3000});
-    else addEventListener("load",()=>setTimeout(loadPixel,1500));
-  }
-  function loadPixel(){
-    if(window.fbq) return;
-    !function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,"script","https://connect.facebook.net/en_US/fbevents.js");
-    fbq("init",CFG.pixelId);fbq("track","PageView");
-  }
-
-  addEventListener("pageshow",e=>{ if(e.persisted) render(); });
-
-  render();
-})();
-</script>
-</body>
-</html>
