@@ -945,7 +945,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     $("#whatsOpen").href="https://wa.me/"+CFG.whats+"?text="+msg;
 
     // Botão Manual Espiritual Familiar
-    const manualLink=new URL(CFG.manualUrl);
+    const manualLink=new URL(CFG.manualUrl,window.location.href);
     new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
     manualLink.searchParams.set("src","quiz_sucesso");
     manualLink.searchParams.set("lead",encodeURIComponent(lead.nome));
@@ -985,5 +985,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 })();
 </script>
 </body>
-</html> 
+</html>
+ 
  

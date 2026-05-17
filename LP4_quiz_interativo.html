@@ -753,7 +753,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     whats:"5544998731245",
     webhook:"https://n8n.alphamanager.cloud/webhook/4567972c-b6d8-4c77-87ed-6b619d9a1ef0",
     pixelId:"",
-    manualUrl:"https://pay.hotmart.com/checkout/payment?product_id=YOUR_HOTMART_ID"
+    manualUrl:"LP6_vls1.html"
   };
   const TOTAL=8;
 
@@ -945,7 +945,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     $("#whatsOpen").href="https://wa.me/"+CFG.whats+"?text="+msg;
 
     // Botão Manual Espiritual Familiar
-    const manualLink=new URL(CFG.manualUrl);
+    const manualLink=new URL(CFG.manualUrl,window.location.href);
     new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
     manualLink.searchParams.set("src","quiz_sucesso");
     manualLink.searchParams.set("lead",encodeURIComponent(lead.nome));
