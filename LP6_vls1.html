@@ -228,7 +228,7 @@ vsl.addEventListener('timeupdate', () => {
   progressFill.style.width = (mapProgress(real) * 100).toFixed(2) + '%';
 });
 
-/* Revelar conteúdo após 60% real */
+/* Revelar conteúdo após 70% real */
 let revealed = false;
 function revealAll(){
   if (revealed) return;
@@ -237,7 +237,7 @@ function revealAll(){
 }
 vsl.addEventListener('timeupdate', () => {
   if (!vsl.duration || isNaN(vsl.duration)) return;
-  if ((vsl.currentTime / vsl.duration) >= 0.6) revealAll();
+  if ((vsl.currentTime / vsl.duration) >= 0.7) revealAll();
 });
 vsl.addEventListener('ended', () => {
   progressFill.style.width = '100%';
