@@ -187,90 +187,95 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer>© 2026 Família Sob a Graça · Este webinar é uma aula online gratuita · Nenhuma promessa de resultado específico é feita</footer>
 
 <script>
-const vsl = document.getElementById('vsl');
-const playOverlay = document.getElementById('playOverlay');
-const playBtn = document.getElementById('playBtn');
-const controls = document.getElementById('controls');
-const progressFill = document.getElementById('progressFill');
-// tracking máximo assistido para evitar que o usuário avance além do que já viu
-let maxPlayed = 0;
+document.addEventListener('DOMContentLoaded', () => {
+  const vsl = document.getElementById('vsl');
+  const playOverlay = document.getElementById('playOverlay');
+  const playBtn = document.getElementById('playBtn');
+  const controls = document.getElementById('controls');
+  const progressFill = document.getElementById('progressFill');
+  if (!vsl) return;
 
-/* Clique no overlay inicial → dá play com som */
-playOverlay.addEventListener('click', () => {
-  vsl.muted = false;
-  vsl.volume = 1;
-  const p = vsl.play();
-  if (p !== undefined) {
-    p.then(() => {
-      playOverlay.classList.add('hidden');
-      controls.classList.add('visible');
-    }).catch(() => {
-      // Se o navegador bloquear com som, tenta mudo
-      vsl.muted = true;
-      vsl.play().then(() => {
-        playOverlay.classList.add('hidden');
-        controls.classList.add('visible');
-      });
+  // Garantir que não haja autoplay e que o overlay permaneça visível até o lead clicar
+  try { vsl.autoplay = false; vsl.pause(); } catch(e){}
+  if (playOverlay) playOverlay.classList.remove('hidden');
+
+  let maxPlayed = 0;
+  let revealed = false;
+
+  function mapProgress(r){
+    if (r <= 0) return 0;
+    if (r >= 1) return 1;
+    if (r <= 0.80) return 0.80 * Math.pow(r / 0.80, 0.45);
+    const t = (r - 0.80) / 0.20;
+    return 0.80 + 0.20 * Math.pow(t, 2.2);
+  }
+
+  function revealAll(){
+    if (revealed) return;
+    revealed = true;
+    document.querySelectorAll('.locked').forEach(el => el.classList.add('revealed'));
+  }
+
+  // Clique no overlay inicial → tenta dar play com som. Se for bloqueado, NÃO inicia automaticamente com som mudo.
+  if (playOverlay) {
+    playOverlay.addEventListener('click', () => {
+      vsl.muted = false;
+      vsl.volume = 1;
+      const p = vsl.play();
+      if (p !== undefined) {
+        p.then(() => {
+          playOverlay.classList.add('hidden');
+          if (controls) controls.classList.add('visible');
+        }).catch(() => {
+          // Navegador bloqueou reprodução com som — manter overlay visível e orientar o usuário
+          const span = playOverlay.querySelector('span');
+          if (span) span.textContent = 'Toque novamente para reproduzir (ative o som do navegador)';
+        });
+      }
     });
   }
-});
 
-/* Play / Pause pelo botão */
-playBtn.addEventListener('click', (e) => {
-  e.stopPropagation();
-  if (vsl.paused) vsl.play(); else vsl.pause();
-});
-vsl.addEventListener('play',  () => { playBtn.textContent = '❚❚'; });
-vsl.addEventListener('pause', () => { playBtn.textContent = '►'; });
-
-/* Clique no vídeo pausa/retoma (só depois de iniciado) */
-vsl.addEventListener('click', () => {
-  if (!controls.classList.contains('visible')) return;
-  if (vsl.paused) vsl.play(); else vsl.pause();
-});
-
-/* Barra: rápida até 80% real, devagar de 80% a 100% */
-function mapProgress(r){
-  if (r <= 0) return 0;
-  if (r >= 1) return 1;
-  if (r <= 0.80) return 0.80 * Math.pow(r / 0.80, 0.45);
-  const t = (r - 0.80) / 0.20;
-  return 0.80 + 0.20 * Math.pow(t, 2.2);
-}
-
-vsl.addEventListener('timeupdate', () => {
-  if (!vsl.duration || isNaN(vsl.duration)) return;
-  const real = vsl.currentTime / vsl.duration;
-  // atualizar máximo assistido
-  if (vsl.currentTime > maxPlayed) maxPlayed = vsl.currentTime;
-  progressFill.style.width = (mapProgress(real) * 100).toFixed(2) + '%';
-});
-
-/* Revelar conteúdo após 70% real */
-let revealed = false;
-function revealAll(){
-  if (revealed) return;
-  revealed = true;
-  document.querySelectorAll('.locked').forEach(el => el.classList.add('revealed'));
-}
-vsl.addEventListener('timeupdate', () => {
-  if (!vsl.duration || isNaN(vsl.duration)) return;
-  if ((vsl.currentTime / vsl.duration) >= 0.7) revealAll();
-});
-vsl.addEventListener('ended', () => {
-  progressFill.style.width = '100%';
-  revealAll();
-});
-
-// Bloquear tentativa de seek para frente: se o novo tempo for maior que maxPlayed, volta para maxPlayed
-vsl.addEventListener('seeking', () => {
-  try {
-    if (vsl.currentTime > (maxPlayed + 0.5)) {
-      vsl.currentTime = maxPlayed;
-    }
-  } catch (e) {
-    // silent
+  // Play / Pause pelo botão
+  if (playBtn) {
+    playBtn.textContent = '►';
+    playBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      if (vsl.paused) vsl.play(); else vsl.pause();
+    });
   }
+
+  if (playBtn) {
+    vsl.addEventListener('play',  () => { playBtn.textContent = '❚❚'; });
+    vsl.addEventListener('pause', () => { playBtn.textContent = '►'; });
+  }
+
+  // Clique no vídeo pausa/retoma (só depois de iniciado)
+  vsl.addEventListener('click', () => {
+    if (!controls || !controls.classList.contains('visible')) return;
+    if (vsl.paused) vsl.play(); else vsl.pause();
+  });
+
+  vsl.addEventListener('timeupdate', () => {
+    if (!vsl.duration || isNaN(vsl.duration)) return;
+    const real = vsl.currentTime / vsl.duration;
+    if (vsl.currentTime > maxPlayed) maxPlayed = vsl.currentTime;
+    if (progressFill) progressFill.style.width = (mapProgress(real) * 100).toFixed(2) + '%';
+    if (!revealed && real >= 0.7) revealAll();
+  });
+
+  vsl.addEventListener('ended', () => {
+    if (progressFill) progressFill.style.width = '100%';
+    revealAll();
+  });
+
+  // Bloquear tentativa de seek para frente
+  vsl.addEventListener('seeking', () => {
+    try {
+      if (vsl.currentTime > (maxPlayed + 0.5)) {
+        vsl.currentTime = maxPlayed;
+      }
+    } catch (e) {}
+  });
 });
 
 /* Countdown */
@@ -292,7 +297,8 @@ upd(); setInterval(upd, 1000);
 /* Audiência simulada */
 setInterval(() => {
   const base = 1200 + Math.floor(Math.random() * 200);
-  document.getElementById('watching').textContent = base.toLocaleString('pt-BR');
+  const w = document.getElementById('watching');
+  if (w) w.textContent = base.toLocaleString('pt-BR');
 }, 3500);
 
 /* Chat rolando */
