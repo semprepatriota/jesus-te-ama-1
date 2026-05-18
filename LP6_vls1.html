@@ -119,7 +119,21 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   </div>
 
       <div class="video">
-        <video id="vsl" src="media/Kit Família 01.mp4" playsinline preload="metadata" controls style="width:100%;border-radius:15px;"></video>
+        <div class="live-dot">AO VIVO</div>
+        <video id="vsl" src="media/Kit Família 01.mp4" playsinline preload="metadata" style="width:100%;border-radius:15px;"></video>
+        <div class="watching">👥 <span id="watching">1.247</span> assistindo</div>
+
+        <div class="play-overlay" id="playOverlay">
+          <div class="play-circle"></div>
+          <span>CLIQUE PARA ASSISTIR COM SOM</span>
+        </div>
+
+        <div class="controls" id="controls">
+          <button class="play-btn" id="playBtn" title="Pausar/Reproduzir">❚❚</button>
+          <div class="progress-track">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -178,6 +192,8 @@ const playOverlay = document.getElementById('playOverlay');
 const playBtn = document.getElementById('playBtn');
 const controls = document.getElementById('controls');
 const progressFill = document.getElementById('progressFill');
+// tracking máximo assistido para evitar que o usuário avance além do que já viu
+let maxPlayed = 0;
 
 /* Clique no overlay inicial → dá play com som */
 playOverlay.addEventListener('click', () => {
@@ -225,6 +241,8 @@ function mapProgress(r){
 vsl.addEventListener('timeupdate', () => {
   if (!vsl.duration || isNaN(vsl.duration)) return;
   const real = vsl.currentTime / vsl.duration;
+  // atualizar máximo assistido
+  if (vsl.currentTime > maxPlayed) maxPlayed = vsl.currentTime;
   progressFill.style.width = (mapProgress(real) * 100).toFixed(2) + '%';
 });
 
@@ -242,6 +260,17 @@ vsl.addEventListener('timeupdate', () => {
 vsl.addEventListener('ended', () => {
   progressFill.style.width = '100%';
   revealAll();
+});
+
+// Bloquear tentativa de seek para frente: se o novo tempo for maior que maxPlayed, volta para maxPlayed
+vsl.addEventListener('seeking', () => {
+  try {
+    if (vsl.currentTime > (maxPlayed + 0.5)) {
+      vsl.currentTime = maxPlayed;
+    }
+  } catch (e) {
+    // silent
+  }
 });
 
 /* Countdown */
