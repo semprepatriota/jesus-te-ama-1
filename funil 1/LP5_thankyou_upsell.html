@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Parabéns! Sua compra foi confirmada</title>
+
+<meta name="referrer" content="no-referrer-when-downgrade">
+
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:'Segoe UI',Arial,sans-serif
+}
+
+body{
+background:#FAF6EE;
+color:#1B2A4E;
+line-height:1.6
+}
+
+.header{
+background:linear-gradient(135deg,#1B2A4E,#2d4373);
+color:#fff;
+padding:60px 20px;
+text-align:center
+}
+
+.check{
+width:90px;
+height:90px;
+background:#22c55e;
+border-radius:50%;
+margin:0 auto 20px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:50px;
+box-shadow:0 10px 30px rgba(34,197,94,.4);
+animation:bounce 1s
+}
+
+@keyframes bounce{
+0%{transform:scale(0)}
+60%{transform:scale(1.2)}
+100%{transform:scale(1)}
+}
+
+.header h1{
+font-size:34px;
+margin-bottom:10px
+}
+
+.header p{
+font-size:18px;
+opacity:.9
+}
+
+.access{
+background:#22c55e;
+color:#fff;
+padding:25px;
+text-align:center;
+margin:30px auto;
+max-width:700px;
+border-radius:15px;
+box-shadow:0 10px 30px rgba(0,0,0,.15)
+}
+
+.access h2{
+font-size:22px;
+margin-bottom:10px
+}
+
+.access a{
+display:inline-block;
+background:#fff;
+color:#22c55e;
+padding:15px 35px;
+border-radius:50px;
+text-decoration:none;
+font-weight:bold;
+margin-top:15px;
+font-size:17px
+}
+
+.steps{
+max-width:700px;
+margin:40px auto;
+padding:0 20px
+}
+
+.steps h2{
+text-align:center;
+margin-bottom:25px;
+color:#1B2A4E
+}
+
+.step{
+background:#fff;
+padding:20px;
+margin:12px 0;
+border-radius:10px;
+display:flex;
+gap:15px;
+align-items:flex-start;
+box-shadow:0 3px 10px rgba(0,0,0,.06)
+}
+
+.step .n{
+background:#B8860B;
+color:#fff;
+min-width:40px;
+height:40px;
+border-radius:50%;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:bold
+}
+
+.upsell{
+background:linear-gradient(135deg,#B8860B,#F5C542);
+padding:60px 20px;
+margin-top:50px
+}
+
+.upsell .box{
+max-width:800px;
+margin:0 auto;
+background:#fff;
+border-radius:20px;
+padding:40px;
+box-shadow:0 20px 50px rgba(0,0,0,.3)
+}
+
+.tag{
+background:#c00;
+color:#fff;
+display:inline-block;
+padding:6px 15px;
+border-radius:20px;
+font-size:13px;
+font-weight:bold;
+margin-bottom:15px
+}
+
+.upsell h2{
+font-size:32px;
+margin-bottom:15px;
+color:#1B2A4E
+}
+
+.upsell .sub{
+font-size:18px;
+color:#555;
+margin-bottom:25px
+}
+
+.features{
+background:#FAF6EE;
+padding:25px;
+border-radius:12px;
+margin:25px 0
+}
+
+.features li{
+list-style:none;
+padding:8px 0;
+font-size:16px
+}
+
+.features li::before{
+content:"✓ ";
+color:#22c55e;
+font-weight:bold;
+margin-right:8px
+}
+
+.price-row{
+display:flex;
+gap:20px;
+align-items:center;
+justify-content:center;
+flex-wrap:wrap;
+margin:25px 0
+}
+
+.price-old{
+text-decoration:line-through;
+color:#999;
+font-size:22px
+}
+
+.price-new{
+font-size:50px;
+font-weight:900;
+color:#B8860B
+}
+
+.timer{
+background:#c00;
+color:#fff;
+text-align:center;
+padding:12px;
+font-weight:bold;
+border-radius:8px;
+margin:15px 0;
+font-size:16px
+}
+
+#cd{
+font-size:22px
+}
+
+/* BOTÃO KIWIFY */
+
+#kiwify-upsell-trigger-d2xhYDc{
+background:linear-gradient(135deg,#22c55e,#16a34a)!important;
+padding:22px!important;
+cursor:pointer!important;
+color:#FFFFFF!important;
+font-weight:900!important;
+border-radius:15px!important;
+border:none!important;
+font-size:24px!important;
+width:100%!important;
+box-shadow:0 10px 25px rgba(34,197,94,.4)!important;
+animation:pulse 2s infinite!important;
+}
+
+@keyframes pulse{
+0%,100%{transform:scale(1)}
+50%{transform:scale(1.03)}
+}
+
+.btn-no{
+margin-top:1rem;
+cursor:pointer;
+font-size:15px;
+text-decoration:underline;
+font-family:sans-serif;
+color:#777
+}
+
+.social{
+text-align:center;
+padding:30px 20px;
+background:#fff
+}
+
+.social a{
+display:inline-block;
+margin:5px;
+background:#1B2A4E;
+color:#fff;
+padding:12px 20px;
+border-radius:8px;
+text-decoration:none;
+font-size:14px
+}
+
+.social a.w{
+background:#22c55e
+}
+
+footer{
+padding:30px;
+text-align:center;
+font-size:13px;
+color:#777
+}
+</style>
+
+</head>
+
+<body>
+
+<section class="header">
+
+<div class="check">✓</div>
+
+<h1>
+Parabéns, seus dados foram confirmados!
+</h1>
+
+<p>
+Deus abençoe sua decisão. Já enviamos tudo para seu WhatsApp.
+</p>
+
+</section>
+
+<div class="access">
+
+<h2>
+🎁 Acesse seu material agora
+</h2>
+
+<p>
+Clique no botão abaixo e entre na sua área de membros.
+</p>
+
+<a href="https://kiwify.app/8RjyqBQ">
+ACESSAR MEUS PRODUTOS →
+</a>
+
+</div>
+
+<section class="steps">
+
+<h2>
+Próximos passos
+</h2>
+
+<div class="step">
+<div class="n">1</div>
+<div>
+<strong>Verifique seu WhatsApp</strong><br>
+Enviamos em instantes o login da área de membros.
+</div>
+</div>
+
+<div class="step">
+<div class="n">2</div>
+<div>
+<strong>Entre no Grupo VIP no WhatsApp</strong><br>
+Clique no link que enviamos no e-mail de boas-vindas.
+</div>
+</div>
+
+<div class="step">
+<div class="n">3</div>
+<div>
+<strong>Comece pela Semana 1 do Devocional</strong><br>
+É o ponto de entrada ideal para a sua jornada.
+</div>
+</div>
+
+<div class="step">
+<div class="n">4</div>
+<div>
+<strong>Leia a oferta especial abaixo ⬇</strong><br>
+Benefício exclusivo liberado somente hoje.
+</div>
+</div>
+
+</section>
+
+<section class="upsell">
+
+<div class="box">
+
+<div class="tag">
+⚡ OFERTA ÚNICA · SÓ NESTA PÁGINA
+</div>
+
+<h2>
+Leve também o pacote especial de oração e finanças cristãs com 70% OFF
+</h2>
+
+<p class="sub">
+Adicione agora ao seu pedido a imersão gravada +
+mentoria financeira cristã por um valor exclusivo.
+</p>
+
+<div class="features">
+
+<ul>
+<li>8 aulas gravadas sobre oração pelos filhos</li>
+<li>Roteiros para restaurar a família</li>
+<li>Mentoria financeira cristã</li>
+<li>Planilha financeira do aposentado</li>
+<li>15 áudios de oração noturna</li>
+<li>Acesso vitalício</li>
+</ul>
+
+</div>
+
+<div class="timer">
+⏰ Esta oferta expira em <span id="cd">15:00</span>
+</div>
+
+<div class="price-row">
+<span class="price-old">R$ 394</span>
+<span class="price-new">R$ 97</span>
+</div>
+
+<p style="text-align:center;color:#555;margin-bottom:15px">
+ou 12x de R$ 9,73
+</p>
+
+<!-- KIWIFY UPSELL -->
+
+<div
+style="text-align:center"
+id="kiwify-upsell-d2xhYDc"
+data-upsell-url="https://pay.kiwify.com.br/d2xhYDc"
+data-downsell-url="https://kiwify.app/8RjyqBQ"
+>
+
+<button id="kiwify-upsell-trigger-d2xhYDc">
+SIM! ADICIONAR AO MEU PEDIDO →
+</button>
+
+<div id="kiwify-upsell-cancel-trigger-d2xhYDc" class="btn-no">
+Não, obrigado — seguir para área de membros
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="social">
+
+<p style="margin-bottom:15px;font-weight:bold">
+Conecte-se com a gente:
+</p>
+
+<a href="#" class="w">📱 WhatsApp VIP</a>
+<a href="#">📺 YouTube</a>
+<a href="#">📷 Instagram</a>
+
+</section>
+
+<footer>
+© 2026 Família Sob a Graça · Todos os direitos reservados
+</footer>
+
+<script>
+let t=15*60;
+
+function tick(){
+
+const m=String(Math.floor(t/60)).padStart(2,'0');
+const s=String(t%60).padStart(2,'0');
+
+document.getElementById('cd').textContent=m+':'+s;
+
+if(t>0){
+t--;
+setTimeout(tick,1000);
+}else{
+document.getElementById('cd').textContent='EXPIRADA';
+}
+
+}
+
+tick();
+</script>
+
+<!-- SCRIPT KIWIFY -->
+<script src="https://snippets.kiwify.com/upsell/upsell.min.js"></script>
+
+</body>
+</html>
