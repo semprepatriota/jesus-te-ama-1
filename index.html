@@ -648,29 +648,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="btn" id="next" type="button" disabled aria-label="Avançar para próxima pergunta">Avançar →</button>
   </nav>
 
-  <section id="success" role="status" aria-live="polite" hidden>
-    <div class="icon-big" aria-hidden="true">🙏</div>
-    <h2 id="successTitle">Pronto! Seu material está a caminho.</h2>
-    <p>As <strong>7 Orações de Proteção Familiar</strong> foram enviadas para o seu WhatsApp agora mesmo.</p>
-
-    <div class="success-box">
-      ⏱️ <strong>Chega em até 60 segundos.</strong><br>
-      Se não receber, verifique se salvou nosso número na agenda.
-    </div>
-
-    <div class="cta-stack">
-      <a id="whatsOpen" class="cta-whats" href="#" rel="noopener">
-        📲 Abrir conversa no WhatsApp
-      </a>
-
-      <div class="divider-or">OU DÊ O PRÓXIMO PASSO</div>
-
-      <a id="manualBtn" class="cta-manual" href="funil 1/LP6_vls1.html?src=quiz_sucesso" rel="noopener" aria-label="Conhecer o Manual Espiritual Familiar">
-        <span class="tag-new">RECOMENDADO</span>
-        📖 Manual Espiritual Familiar
-      </a>
-    </div>
-  </section>
 
 </main>
 
@@ -937,38 +914,24 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   function showSuccess(lead){
-    [...document.querySelectorAll(".step, .nav, .progress, .counter, .header")].forEach(el=>el.style.display="none");
-    success.hidden=false;
-    success.style.display="block";
-    $("#successTitle").textContent="Pronto, "+lead.nome+"! Seu material está a caminho.";
-
-    // Botão WhatsApp
-    const msg=encodeURIComponent("Olá! Sou "+lead.nome+". Acabei de fazer o quiz e quero as 7 Orações de Proteção Familiar.");
-    $("#whatsOpen").href="https://wa.me/"+CFG.whats+"?text="+msg;
-
-    // Botão Manual Espiritual Familiar
+    // Redirecionar para LP6 automaticamente
     const manualLink=new URL(CFG.manualUrl,window.location.href);
     new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
     manualLink.searchParams.set("src","quiz_sucesso");
     manualLink.searchParams.set("lead",encodeURIComponent(lead.nome));
-    const manualBtn=$("#manualBtn");
-    manualBtn.href=manualLink.toString();
-    manualBtn.target="_blank";
-    manualBtn.rel="noopener";
 
-    // Ao clicar no botão do ebook/Manual → dispara POST também
-    manualBtn.addEventListener("click",()=>{
-      const payload={
-        ...(leadCache||lead),
-        evento:"ebook_click",
-        destino:manualLink.toString(),
-        data:new Date().toISOString()
-      };
-      postWebhook(payload);
-      if(typeof fbq==="function") fbq("track","InitiateCheckout",{content_name:"Manual Espiritual Familiar"});
-    },{passive:true});
+    // Dispara evento de ebook_click antes de redirecionar
+    const payload={
+      ...(leadCache||lead),
+      evento:"ebook_click",
+      destino:manualLink.toString(),
+      data:new Date().toISOString()
+    };
+    postWebhook(payload);
+    if(typeof fbq==="function") fbq("track","InitiateCheckout",{content_name:"Manual Espiritual Familiar"});
 
-    success.scrollIntoView({behavior:"smooth",block:"start"});
+    // Redireciona para LP6
+    setTimeout(()=>window.location.href=manualLink.toString(),300);
   }
 
   if(CFG.pixelId){
