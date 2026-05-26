@@ -4,7 +4,6 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width,initial-scale=1">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -114,7 +113,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   <p class="sub">Masterclass gratuita de 7 minutos revelando o método bíblico que milhares de famílias cristãs estão usando para proteger lar, casamento, filhos e finanças.</p>
 
   <div class="countdown" id="cd">
-    <div class="cbox"><span class="num" id="d">00</span><span class="lbl">Dias</span></div>
     <div class="cbox"><span class="num" id="h">00</span><span class="lbl">Horas</span></div>
     <div class="cbox"><span class="num" id="m">00</span><span class="lbl">Minutos</span></div>
     <div class="cbox"><span class="num" id="sec">00</span><span class="lbl">Seg</span></div>
@@ -289,7 +287,6 @@ function upd(){
   const h = Math.floor(diff / 3600000);
   const m = Math.floor((diff % 3600000) / 60000);
   const s = Math.floor((diff % 60000) / 1000);
-  document.getElementById('d').textContent = '00';
   document.getElementById('h').textContent = String(h).padStart(2,'0');
   document.getElementById('m').textContent = String(m).padStart(2,'0');
   document.getElementById('sec').textContent = String(s).padStart(2,'0');
