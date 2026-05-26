@@ -593,7 +593,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <header class="header">
     <h1 id="quizTitle">Descubra em 2 minutos se sua casa está protegida — ou se existem brechas que você ainda não percebeu.</h1>
-    <p>Quiz bíblico · 7 perguntas · Material de proteção no final</p>
+    <p>Quiz bíblico · 7 perguntas</p>
   </header>
 
   <div class="progress" role="progressbar" aria-label="Progresso do quiz" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -802,7 +802,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const pct=(current/TOTAL)*100;
     bar.style.width=pct+"%";
     progressEl.setAttribute("aria-valuenow",Math.round(pct));
-    counter.textContent=current<TOTAL?"Pergunta "+current+" de 7":"Último passo — liberação do material";
+    counter.textContent=current<TOTAL?"Pergunta "+current+" de 7":"Etapa final";
     prev.disabled=current===1;
     if(current===TOTAL){
       next.textContent="ACESSAR MANUAL ESPIRITUAL FAMILIAR →";
