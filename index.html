@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#1B2A4E">
-<meta name="description" content="Descubra em 2 minutos se sua casa está espiritualmente protegida. Quiz bíblico gratuito, 7 perguntas, material de proteção liberado no WhatsApp.">
+<meta name="description" content="Descubra em 2 minutos qual área da sua vida familiar mais precisa de cuidado e oração hoje.">
 <meta name="robots" content="index,follow">
 <meta name="format-detection" content="telephone=no">
 <link rel="canonical" href="https://www.hfnew.com.br/">
@@ -18,11 +18,11 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <!-- End Google Tag Manager -->
 
 <meta property="og:type" content="website">
-<meta property="og:title" content="Qual o Nível de Proteção Espiritual da Sua Casa?">
-<meta property="og:description" content="Quiz bíblico · 7 perguntas · 2 minutos. Descubra em minutos.">
+<meta property="og:title" content="Qual área da sua família precisa de mais cuidado hoje?">
+<meta property="og:description" content="Quiz bíblico gratuito com 7 perguntas rápidas e um próximo passo personalizado.">
 <meta property="og:locale" content="pt_BR">
 
-<title>Qual o Nível de Proteção Espiritual da Sua Família?</title>
+<title>Quiz Bíblico Familiar | Seu Próximo Passo</title>
 <meta name="referrer" content="no-referrer-when-downgrade">
 <script>(function(){function ensureRel(){document.querySelectorAll('a[target="_blank"]').forEach(function(a){var r=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(r.indexOf('noopener')===-1) r.push('noopener');if(r.indexOf('noreferrer')===-1) r.push('noreferrer');a.setAttribute('rel', r.join(' '));});}function normHover(){if(!document.getElementById('hoverScaleStyle')){var s=document.createElement('style');s.id='hoverScaleStyle';s.textContent='.hover-scale{transition:transform .2s}.hover-scale:hover{transform:scale(1.05)}';document.head.appendChild(s);}document.querySelectorAll('[onmouseover],[onmouseout]').forEach(function(el){el.classList.add('hover-scale');el.removeAttribute('onmouseover');el.removeAttribute('onmouseout');});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ensureRel();normHover();});else{ensureRel();normHover();}})();</script>
 
@@ -466,6 +466,19 @@ img{
   color:var(--navy);
 }
 
+.success-box h3{
+  margin:0 0 8px;
+  color:var(--navy);
+  font-size:clamp(20px,5vw,24px);
+}
+
+.result-priority{
+  margin:14px 0 0;
+  padding-top:14px;
+  border-top:1px solid rgba(27,42,78,.16);
+  font-size:14px;
+}
+
 /* CTA */
 .cta-stack{
   display:flex;
@@ -666,8 +679,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <main class="quiz" role="main" aria-labelledby="quizTitle">
 
   <header class="header">
-    <h1 id="quizTitle">Descubra em 2 minutos se sua casa está protegida — ou se existem brechas que você ainda não percebeu.</h1>
-    <p>Quiz bíblico · 7 perguntas</p>
+    <h1 id="quizTitle">Descubra em 2 minutos qual área da sua vida familiar mais precisa de cuidado e oração hoje.</h1>
+    <p>Responda a 7 perguntas rápidas e encontre um primeiro passo para trazer mais paz, união e constância espiritual à sua casa.</p>
   </header>
 
   <div class="progress" role="progressbar" aria-label="Progresso do quiz" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
@@ -679,10 +692,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
   <section class="step" data-step="8" id="form-step" hidden aria-labelledby="leadTitle">
     <div style="text-align:center">
-      <span class="lead-badge">✅ AO VIVO PASTOR JEREMIAS</span>
+      <span class="lead-badge">SEU RESULTADO ESTÁ PRONTO</span>
     </div>
-    <h2 id="leadTitle" style="text-align:center">🔓 A proteção da sua casa começa hoje.</h2>
-    <p style="text-align:center;margin-bottom:22px;color:#555">Preencha abaixo e assista ao vivo a benção do padre JEREMIAS que está acontecendo agora.</p>
+    <h2 id="leadTitle" style="text-align:center">Há um ponto claro por onde você pode começar.</h2>
+    <p style="text-align:center;margin-bottom:22px;color:#555">Informe seu primeiro nome e WhatsApp para salvar seu resultado e seguir para a aula prática do <strong>Padre Jeremias</strong>.</p>
 
     <form id="leadForm" novalidate>
       <fieldset style="border:0">
@@ -714,7 +727,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
         <label class="consent-row" for="consent">
           <input type="checkbox" id="consent" name="consent" required aria-required="true" aria-describedby="consent-err">
-          <span>Concordo em receber conteúdos e comunicações pelo WhatsApp ou e-mail e li a <a href="privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>.</span>
+          <span>Aceito receber meu resultado e conteúdos relacionados pelo WhatsApp ou e-mail. Posso sair quando quiser. Li a <a href="privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>.</span>
         </label>
         <div class="consent-error" id="consent-err" role="alert">Marque a autorização para continuar.</div>
 
@@ -728,78 +741,94 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     <button class="btn" id="next" type="button" disabled aria-label="Avançar para próxima pergunta">Avançar →</button>
   </nav>
 
+  <section id="success" role="status" aria-live="polite" hidden>
+    <div class="icon-big" aria-hidden="true">✓</div>
+    <span class="lead-badge">SEU RESULTADO</span>
+    <h2 id="successTitle">Seu resultado está pronto.</h2>
+    <p>Este resultado mostra seu momento atual e um caminho possível, sem julgamentos.</p>
+    <div class="success-box">
+      <h3 id="resultName"></h3>
+      <p id="resultText"></p>
+      <p class="result-priority" id="resultPriority"></p>
+    </div>
+    <p><strong>Seu resultado não é uma condenação.</strong> Ele apenas mostra por onde começar.</p>
+    <div class="cta-stack">
+      <a id="resultCta" class="cta-manual" href="#">ASSISTIR À AULA DO PADRE JEREMIAS →</a>
+    </div>
+  </section>
+
 
 </main>
 
 <template id="tplSteps">
   <article class="step" data-step="1">
-    <p class="hook">Antes de começar: responda com o coração, não com o que "deveria ser". Ninguém além de você vai ver isso.</p>
-    <h2>1. Quando você abre a porta da sua casa no fim do dia, o que você sente primeiro?</h2>
+    <p class="hook">Comece pelo que você sente. Não existe resposta certa ou errada.</p>
+    <h2>1. Quando você chega em casa, qual sentimento costuma aparecer primeiro?</h2>
     <div role="radiogroup" aria-label="Pergunta 1">
       <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Paz — minha casa é meu lugar de descanso.</button>
       <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Alívio misturado com cansaço — "finalmente cheguei".</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Um peso que não sei explicar. Parece que entrei num lugar pesado.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Vontade de não entrar. Prefiro ficar mais um pouco no carro.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Uma tensão que demora um pouco para passar.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Vontade de ficar longe dos problemas por mais algum tempo.</button>
     </div>
   </article>
   <article class="step" data-step="2">
-    <p class="hook">Essa próxima pergunta incomoda mais mulheres cristãs do que qualquer outra. Mas ela revela MUITO sobre sua casa.</p>
-    <h2>2. Quando foi a última vez que você orou em voz alta, nominalmente, por cada pessoa da sua família?</h2>
+    <p class="hook">Agora pense na sua rotina, não apenas na sua intenção.</p>
+    <h2>2. Quando foi a última vez que você separou alguns minutos para orar com calma por sua família?</h2>
     <div role="radiogroup" aria-label="Pergunta 2">
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Essa semana. Oro por eles com nome, um a um.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Esse mês, mas não foi tão específico.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Faz tempo. Oro em geral, mas não lembro da última vez.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Nunca. Ou não me lembro de verdade.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Esta semana.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Nas últimas duas semanas.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Faz mais de um mês.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Quero retomar esse hábito.</button>
     </div>
   </article>
   <article class="step" data-step="3">
-    <p class="hook">Essa é pra quem é casada. Se não for, marque a última opção.</p>
-    <h2>3. Como está o silêncio entre você e seu marido (ou esposa) atualmente?</h2>
+    <p class="hook">A paz da casa também aparece na forma como as pessoas se tratam.</p>
+    <h2>3. Como está a comunicação entre as pessoas da sua casa?</h2>
     <div role="radiogroup" aria-label="Pergunta 3">
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Silêncio confortável — a gente se entende sem precisar falar.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Silêncio neutro — conversamos o necessário, sem brigas.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Silêncio pesado — dormimos na mesma cama, mas quase não nos tocamos.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Silêncio de guerra — ou sou solteiro(a)/viúvo(a).</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Aberta e acolhedora. Conseguimos conversar de verdade.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Funciona, mas muitas conversas ficam só no necessário.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Estamos mais distantes do que eu gostaria.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Existem conflitos frequentes ou silêncios pesados.</button>
     </div>
   </article>
   <article class="step" data-step="4">
-    <p class="hook">Tem uma pergunta que toda mãe evita fazer pra si mesma. Mas aqui, você pode.</p>
-    <h2>4. Quando pensa nos seus filhos (ou pessoas que ama mais), qual sentimento aparece primeiro?</h2>
+    <p class="hook">Quem ama também se preocupa. A diferença está no peso que essa preocupação ocupa.</p>
+    <h2>4. Quando você pensa nas pessoas que mais ama, qual sentimento aparece primeiro?</h2>
     <div role="radiogroup" aria-label="Pergunta 4">
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Gratidão e paz. Sinto que estão cobertos.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Amor com preocupação pontual, mas nada que me tire o sono.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Preocupação constante. Vivo pensando "e se acontecer algo...".</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Medo. Sinto que estão expostos e não consigo proteger.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Gratidão e paz.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Amor com alguma preocupação.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Uma preocupação que aparece com frequência.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Medo de não conseguir ajudá-las quando precisarem.</button>
     </div>
   </article>
   <article class="step" data-step="5">
-    <p class="hook">Tem coisas que a gente sente, mas nunca fala em voz alta. Uma delas vem agora.</p>
-    <h2>5. Você sente que existe "algo" pesado na sua casa, mesmo quando aparentemente está tudo bem?</h2>
+    <p class="hook">Nem todo cansaço é espiritual. Ainda assim, o ambiente da casa diz muita coisa sobre como estamos vivendo.</p>
+    <h2>5. Nos últimos dias, como você descreveria o ambiente da sua casa?</h2>
     <div role="radiogroup" aria-label="Pergunta 5">
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Não. Sinto presença de Deus aqui.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Raramente. Quando acontece, passa rápido.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Com frequência. Sinto "algo" que não consigo nomear.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Sim, constantemente. Às vezes até tenho medo à noite.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Leve e acolhedor na maior parte do tempo.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Oscila entre momentos bons e dias difíceis.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Frequentemente tenso ou cansativo.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">É difícil encontrar descanso e paz dentro de casa.</button>
     </div>
   </article>
   <article class="step" data-step="6">
-    <p class="hook">Muita gente de fé se esconde atrás de uma frase que machuca. Veja se é o seu caso.</p>
-    <h2>6. Qual dessas frases você já disse (mesmo em pensamento) nos últimos 30 dias?</h2>
+    <p class="hook">A constância vale mais do que a perfeição.</p>
+    <h2>6. Como está sua rotina de oração atualmente?</h2>
     <div role="radiogroup" aria-label="Pergunta 6">
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Nenhuma. Minha rotina com Deus está firme.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">"Essa semana foi corrida, semana que vem eu retomo."</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">"Acho que Deus entende, eu estou fazendo o que posso."</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">"Não sei se Deus ainda me ouve direito."</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Tenho uma rotina constante.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Oro algumas vezes por semana.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Oro principalmente nos momentos difíceis.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Quero recomeçar, mas ainda não encontrei um ritmo.</button>
     </div>
   </article>
   <article class="step" data-step="7">
-    <p class="hook">Última pergunta. Responda com honestidade brutal.</p>
-    <h2>7. Se Jesus entrasse na sua casa agora, sem avisar, o que você sentiria primeiro?</h2>
+    <p class="hook">Para terminar, escolha onde você mais deseja ver uma mudança.</p>
+    <h2>7. Qual transformação faria mais diferença na sua casa nos próximos 7 dias?</h2>
     <div role="radiogroup" aria-label="Pergunta 7">
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="3">Paz. Ele já mora aqui.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="2">Alegria, mas correria pra "ajeitar" algumas coisas antes.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="1">Vergonha. Tenho coisas que não gostaria que Ele visse.</button>
-      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0">Pavor. Minha casa não está nem perto de receber Ele.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0" data-goal="mais paz no ambiente da casa">Mais paz no ambiente da casa.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0" data-goal="mais união e diálogo na família">Mais união e diálogo na família.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0" data-goal="orar melhor por quem você ama">Orar melhor por quem eu amo.</button>
+      <button class="opt" type="button" role="radio" aria-checked="false" data-v="0" data-goal="uma rotina espiritual simples e constante">Criar uma rotina espiritual simples e constante.</button>
     </div>
   </article>
 </template>
@@ -836,6 +865,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const answers=new Array(7);
   let leadCache=null;
   let formViewed=false;
+  let selectedGoal="";
 
   function trackEvent(eventName,params={}){
     window.dataLayer=window.dataLayer||[];
@@ -891,6 +921,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     btn.classList.add("selected");
     btn.setAttribute("aria-checked","true");
     answers[current-1]=+btn.dataset.v;
+    if(current===7) selectedGoal=btn.dataset.goal||"";
     next.disabled=false;
     trackEvent("quiz_answer_selected",{
       question_number:current
@@ -918,7 +949,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     counter.textContent=current<TOTAL?"Pergunta "+current+" de 7":"Etapa final";
     prev.disabled=current===1;
     if(current===TOTAL){
-      next.textContent="ACESSAR MANUAL ESPIRITUAL FAMILIAR →";
+      next.textContent="VER MEU RESULTADO E ASSISTIR À AULA →";
       validateForm();
       if(!formViewed){
         formViewed=true;
@@ -1046,7 +1077,8 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       email:email.value.trim()||null,
       consentimento:true,
       respostas:answers,
-      pontuacao:answers.reduce((a,b)=>a+(b||0),0),
+      pontuacao:answers.slice(0,6).reduce((a,b)=>a+(b||0),0),
+      objetivo:selectedGoal,
       utm:Object.fromEntries(new URLSearchParams(location.search)),
       data:new Date().toISOString(),
       origem:location.href,
@@ -1067,18 +1099,47 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   }
 
   function showSuccess(lead){
-    // Redirecionar para LP6 automaticamente
     const manualLink=new URL(CFG.manualUrl,window.location.href);
     new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
     manualLink.searchParams.set("src","quiz_sucesso");
 
-    trackEvent("click_offer",{
-      offer:"manual_espiritual_familiar"
-    });
-    if(typeof fbq==="function") fbq("track","InitiateCheckout",{content_name:"Manual Espiritual Familiar"});
+    const score=lead.pontuacao;
+    const result=score>=14
+      ? {
+          name:"Base firme, pronta para avançar",
+          text:"Sua família demonstra bons fundamentos de diálogo, cuidado e oração. O próximo passo é proteger essa base com uma rotina simples e constante."
+        }
+      : score>=8
+        ? {
+            name:"Atenção à rotina e ao ambiente",
+            text:"Há sinais de que o cansaço e as preocupações estão ocupando parte do espaço da paz. Pequenos hábitos podem ajudar sua família a recuperar presença, diálogo e constância."
+          }
+        : {
+            name:"Momento de reconstrução com passos simples",
+            text:"Sua casa pode estar atravessando uma fase que pede mais acolhimento, diálogo e direção. Você não precisa resolver tudo de uma vez: comece por um passo possível hoje."
+          };
 
-    // Redireciona para LP6
-    setTimeout(()=>window.location.href=manualLink.toString(),300);
+    [...document.querySelectorAll(".step, .nav, .progress, .counter, .header")].forEach(el=>el.style.display="none");
+    success.hidden=false;
+    success.style.display="block";
+    $("#successTitle").textContent="Pronto, "+lead.nome+". Aqui está seu resultado.";
+    $("#resultName").textContent=result.name;
+    $("#resultText").textContent=result.text;
+    $("#resultPriority").textContent=lead.objetivo
+      ? "Sua prioridade escolhida: "+lead.objetivo+"."
+      : "Escolha um primeiro passo que seja possível manter nesta semana.";
+
+    const resultCta=$("#resultCta");
+    resultCta.href=manualLink.toString();
+    resultCta.addEventListener("click",()=>{
+      trackEvent("click_offer",{
+        offer:"aula_padre_jeremias"
+      });
+      if(typeof fbq==="function") fbq("track","ViewContent",{content_name:"Aula Padre Jeremias"});
+    },{passive:true,once:true});
+
+    trackEvent("quiz_result_view");
+    success.scrollIntoView({behavior:"smooth",block:"start"});
   }
 
   if(CFG.pixelId){
