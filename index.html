@@ -29,7 +29,7 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 <link rel="preconnect" href="https://connect.facebook.net" crossorigin>
 <link rel="dns-prefetch" href="https://wa.me">
 <link rel="dns-prefetch" href="https://pay.hotmart.com">
-<link rel="dns-prefetch" href="https://n8n.alphamanager.cloud">
+<link rel="dns-prefetch" href="https://docs.google.com">
 
 <style>
 :root{
@@ -314,7 +314,7 @@ img{
   margin-left:4px;
 }
 
-.field .tag.opt{
+.field .tag.optional{
   color:#888;
 }
 
@@ -382,6 +382,40 @@ img{
   line-height:1.5;
   text-align:center;
 }
+
+.consent-row{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  margin-top:16px;
+  color:#465066;
+  font-size:12px;
+  line-height:1.45;
+  cursor:pointer;
+}
+
+.consent-row input{
+  width:20px;
+  height:20px;
+  min-width:20px;
+  margin:1px 0 0;
+  accent-color:var(--green);
+}
+
+.consent-row a{
+  color:var(--navy);
+  font-weight:700;
+}
+
+.consent-error{
+  display:none;
+  margin:6px 0 0 30px;
+  color:var(--red);
+  font-size:12px;
+  font-weight:600;
+}
+
+.consent-error.show{display:block}
 
 /* SUCCESS */
 #success{
@@ -671,14 +705,20 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
         </div>
 
         <div class="field" id="f-email">
-          <label for="email">E-mail <span class="tag opt">(opcional)</span></label>
+          <label for="email">E-mail <span class="tag optional">(opcional)</span></label>
           <input type="email" id="email" name="email" placeholder="seu@email.com (opcional)" autocomplete="email" maxlength="80" aria-describedby="email-err">
           <span class="icon ok" aria-hidden="true">✓</span>
           <span class="icon err" aria-hidden="true">✕</span>
           <div class="error" id="email-err" role="alert">Digite um e-mail válido ou deixe em branco.</div>
         </div>
 
-        <p class="privacy">🔒 Seus dados estão seguros. Não enviamos spam. LGPD.</p>
+        <label class="consent-row" for="consent">
+          <input type="checkbox" id="consent" name="consent" required aria-required="true" aria-describedby="consent-err">
+          <span>Concordo em receber conteúdos e comunicações pelo WhatsApp ou e-mail e li a <a href="privacidade.html" target="_blank" rel="noopener noreferrer">Política de Privacidade</a>.</span>
+        </label>
+        <div class="consent-error" id="consent-err" role="alert">Marque a autorização para continuar.</div>
+
+        <p class="privacy">🔒 Seus dados serão usados somente para enviar os conteúdos solicitados e comunicações relacionadas.</p>
       </fieldset>
     </form>
   </section>
@@ -770,7 +810,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   // ================= CONFIG =================
   const CFG={
     whats:"5544998731245",
-    webhook:"https://n8n.alphamanager.cloud/webhook/4567972c-b6d8-4c77-87ed-6b619d9a1ef0",
+    leadEndpoint:"https://docs.google.com/forms/d/e/1FAIpQLSe07Q62aFxdGA5ffjWleywdUop6ZDmTqQbF9_rAnGk5oBlsFw/formResponse",
+    leadFields:{
+      nome:"entry.1545161006",
+      whatsapp:"entry.847773218",
+      email:"entry.1010811264",
+      origem:"entry.1014445880",
+      utm:"entry.2029576189",
+      leadId:"entry.1595690501",
+      consentimento:"entry.282041816"
+    },
     pixelId:"",
     manualUrl:"funil 1/LP6_vls1.html"
   };
@@ -779,7 +828,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const $=s=>document.querySelector(s);
   const bar=$("#bar"),counter=$("#counter"),next=$("#next"),prev=$("#prev");
   const stepsRoot=$("#steps"),formStep=$("#form-step"),success=$("#success");
-  const nome=$("#nome"),whats=$("#whats"),email=$("#email");
+  const nome=$("#nome"),whats=$("#whats"),email=$("#email"),consent=$("#consent");
   const progressEl=document.querySelector('[role="progressbar"]');
   const audio=$("#quizAudio"),audioToggle=$("#audioToggle"),audioLabel=$("#audioLabel");
 
@@ -916,6 +965,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   whats.addEventListener("keypress",e=>{ if(e.key.length===1&&!/\d/.test(e.key)) e.preventDefault(); });
   nome.addEventListener("input",validateForm,{passive:true});
   email.addEventListener("input",validateForm,{passive:true});
+  consent.addEventListener("change",validateForm,{passive:true});
 
   function setField(id,input,isValid,touched){
     const f=document.getElementById(id);
@@ -931,46 +981,56 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const wOk=validWhats(whats.value);
     const eVal=email.value.trim();
     const eOk=validEmail(eVal);
+    const cOk=consent.checked;
 
     setField("f-nome",nome,nomeOk,nome.value.length>0);
     setField("f-whats",whats,wOk,whats.value.length>0);
     setField("f-email",email,eOk&&!!eVal,eVal.length>0);
+    consent.setAttribute("aria-invalid",String(!cOk));
+    $("#consent-err").classList.toggle("show",!cOk&&document.activeElement===consent);
 
-    const all=nomeOk&&wOk&&eOk;
+    const all=nomeOk&&wOk&&eOk&&cOk;
     if(current===TOTAL) next.disabled=!all;
     return all;
   }
 
-  // POST para o webhook n8n
-  function postWebhook(payload){
-    if(!CFG.webhook) return Promise.resolve();
-    return fetch(CFG.webhook,{
+  function postLead(payload){
+    if(!CFG.leadEndpoint) return Promise.resolve();
+    const fields=CFG.leadFields;
+    const body=new URLSearchParams();
+    body.set(fields.nome,payload.nome);
+    body.set(fields.whatsapp,payload.whatsapp);
+    body.set(fields.email,payload.email||"");
+    body.set(fields.origem,payload.origem);
+    body.set(fields.utm,JSON.stringify(payload.utm||{}));
+    body.set(fields.leadId,payload.lead_id);
+    body.set(fields.consentimento,payload.consentimento?"Sim":"Nao");
+
+    return fetch(CFG.leadEndpoint,{
       method:"POST",
-      headers:{"Content-Type":"application/json"},
-      body:JSON.stringify(payload),
+      headers:{"Content-Type":"application/x-www-form-urlencoded;charset=UTF-8"},
+      body:body.toString(),
       keepalive:true,
-      mode:"cors"
-    })
-    .then(res=>{
-      if(!res.ok) throw new Error(`Webhook error: ${res.status}`);
-      return res.json().catch(()=>({}));
+      mode:"no-cors"
     })
     .catch(err=>{
-      console.warn("Webhook POST failed, attempting sendBeacon fallback",err);
+      console.warn("Lead submission failed, attempting sendBeacon fallback",err);
       try{
         navigator.sendBeacon&&navigator.sendBeacon(
-          CFG.webhook,
-          JSON.stringify(payload)
+          CFG.leadEndpoint,
+          new Blob([body.toString()],{type:"application/x-www-form-urlencoded;charset=UTF-8"})
         );
       }catch(e){
-        console.error("Beacon fallback also failed",e);
+        console.error("Lead fallback also failed",e);
       }
     });
   }
 
   function submitLead(){
     if(!validateForm()){
-      (nome.value.trim().length<2?nome:(!validWhats(whats.value)?whats:email)).focus();
+      const invalid=nome.value.trim().length<2?nome:(!validWhats(whats.value)?whats:(!validEmail(email.value.trim())?email:consent));
+      invalid.focus();
+      if(invalid===consent) $("#consent-err").classList.add("show");
       return;
     }
     next.disabled=true;
@@ -979,10 +1039,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     const lead={
       evento:"lead_oracoes",
+      lead_id:(crypto.randomUUID?crypto.randomUUID():"lead_"+Date.now()+"_"+Math.random().toString(36).slice(2)),
       nome:nome.value.trim(),
       whatsapp:whatsIntl,
       whats_formatado:whats.value,
       email:email.value.trim()||null,
+      consentimento:true,
       respostas:answers,
       pontuacao:answers.reduce((a,b)=>a+(b||0),0),
       utm:Object.fromEntries(new URLSearchParams(location.search)),
@@ -996,13 +1058,12 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     try{localStorage.setItem("fsg_lead",JSON.stringify(lead))}catch{}
     trackEvent("generate_lead");
 
-    // Dispara o POST para o n8n
-    const webhookPromise=postWebhook(lead);
+    const leadPromise=postLead(lead);
 
     if(typeof fbq==="function") fbq("track","Lead");
 
-    // Mostra sucesso mesmo se webhook falhar (soft fail)
-    webhookPromise.finally(()=>showSuccess(lead));
+    // O funil segue mesmo se a coleta estiver temporariamente indisponível.
+    leadPromise.finally(()=>showSuccess(lead));
   }
 
   function showSuccess(lead){
@@ -1011,14 +1072,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
     manualLink.searchParams.set("src","quiz_sucesso");
 
-    // Dispara evento de ebook_click antes de redirecionar
-    const payload={
-      ...(leadCache||lead),
-      evento:"ebook_click",
-      destino:manualLink.toString(),
-      data:new Date().toISOString()
-    };
-    postWebhook(payload);
     trackEvent("click_offer",{
       offer:"manual_espiritual_familiar"
     });
