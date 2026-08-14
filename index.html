@@ -7,7 +7,7 @@
 <meta name="description" content="Descubra em 2 minutos se sua casa está espiritualmente protegida. Quiz bíblico gratuito, 7 perguntas, material de proteção liberado no WhatsApp.">
 <meta name="robots" content="index,follow">
 <meta name="format-detection" content="telephone=no">
-<link rel="canonical" href="https://hfnew.com.br/">
+<link rel="canonical" href="https://www.hfnew.com.br/">
 
 <!-- Google Tag Manager -->
 <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
@@ -16,15 +16,6 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
 })(window,document,'script','dataLayer','GTM-TPRFFVTM');</script>
 <!-- End Google Tag Manager -->
-
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BZZ0W0PW2T"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-BZZ0W0PW2T');
-</script>
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Qual o Nível de Proteção Espiritual da Sua Casa?">
@@ -566,8 +557,51 @@ img{
   border:0;
 }
 
+.audio-control{
+  position:fixed;
+  top:14px;
+  right:14px;
+  z-index:20;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  min-height:44px;
+  padding:10px 14px;
+  border:1px solid rgba(255,255,255,.28);
+  border-radius:999px;
+  background:rgba(20,31,58,.82);
+  color:#fff;
+  font-size:13px;
+  font-weight:800;
+  box-shadow:0 10px 28px rgba(0,0,0,.24);
+  backdrop-filter:blur(10px);
+}
+
+.audio-control:hover,
+.audio-control:focus-visible{
+  outline:0;
+  background:rgba(27,42,78,.94);
+}
+
+.audio-control .audio-icon{
+  font-size:16px;
+  line-height:1;
+}
+
+.audio-control.is-playing{
+  background:rgba(184,134,11,.94);
+}
+
 /* MOBILE */
 @media(max-width:520px){
+  .audio-control{
+    position:static;
+    width:100%;
+    justify-content:center;
+    margin:0 0 10px;
+    background:rgba(255,255,255,.12);
+  }
+
   .step{
     padding:26px 20px;
   }
@@ -588,6 +622,12 @@ img{
 <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-TPRFFVTM"
 height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <!-- End Google Tag Manager (noscript) -->
+
+<button class="audio-control" id="audioToggle" type="button" aria-pressed="false" aria-label="Tocar música calma de fundo">
+  <span class="audio-icon" aria-hidden="true">♪</span>
+  <span id="audioLabel">Tocar música calma</span>
+</button>
+<audio id="quizAudio" src="media/musica-quiz.mp3.mp3" preload="none" loop></audio>
 
 <main class="quiz" role="main" aria-labelledby="quizTitle">
 
@@ -741,14 +781,58 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   const stepsRoot=$("#steps"),formStep=$("#form-step"),success=$("#success");
   const nome=$("#nome"),whats=$("#whats"),email=$("#email");
   const progressEl=document.querySelector('[role="progressbar"]');
+  const audio=$("#quizAudio"),audioToggle=$("#audioToggle"),audioLabel=$("#audioLabel");
 
   let current=1;
   const answers=new Array(7);
   let leadCache=null;
+  let formViewed=false;
+
+  function trackEvent(eventName,params={}){
+    window.dataLayer=window.dataLayer||[];
+    window.dataLayer.push({
+      event:eventName,
+      page_type:"quiz",
+      funnel_name:"familia_protegida",
+      ...params
+    });
+  }
 
   stepsRoot.appendChild($("#tplSteps").content.cloneNode(true));
   const steps=[...stepsRoot.querySelectorAll(".step"),formStep];
   steps.forEach((s,i)=>{ if(i>0) s.hidden=true; else s.classList.add("active"); });
+
+  if(audio&&audioToggle){
+    audio.volume=.18;
+    audioToggle.addEventListener("click",async()=>{
+      if(audio.paused){
+        try{
+          await audio.play();
+          audioToggle.classList.add("is-playing");
+          audioToggle.setAttribute("aria-pressed","true");
+          audioToggle.setAttribute("aria-label","Pausar música calma de fundo");
+          audioLabel.textContent="Pausar música";
+          trackEvent("background_music_play");
+        }catch(err){
+          console.warn("Audio playback failed",err);
+          audioLabel.textContent="Música indisponível";
+          audioToggle.disabled=true;
+        }
+      }else{
+        audio.pause();
+        audioToggle.classList.remove("is-playing");
+        audioToggle.setAttribute("aria-pressed","false");
+        audioToggle.setAttribute("aria-label","Tocar música calma de fundo");
+        audioLabel.textContent="Tocar música calma";
+        trackEvent("background_music_pause");
+      }
+    });
+
+    audio.addEventListener("error",()=>{
+      audioLabel.textContent="Música indisponível";
+      audioToggle.disabled=true;
+    });
+  }
 
   stepsRoot.addEventListener("click",e=>{
     const btn=e.target.closest(".opt");
@@ -759,6 +843,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     btn.setAttribute("aria-checked","true");
     answers[current-1]=+btn.dataset.v;
     next.disabled=false;
+    trackEvent("quiz_answer_selected",{
+      question_number:current
+    });
   },{passive:true});
 
   stepsRoot.addEventListener("keydown",e=>{
@@ -784,6 +871,10 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     if(current===TOTAL){
       next.textContent="ACESSAR MANUAL ESPIRITUAL FAMILIAR →";
       validateForm();
+      if(!formViewed){
+        formViewed=true;
+        trackEvent("quiz_form_view");
+      }
       queueMicrotask(()=>nome.focus({preventScroll:true}));
     }else{
       next.textContent="Avançar →";
@@ -903,6 +994,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 
     leadCache=lead;
     try{localStorage.setItem("fsg_lead",JSON.stringify(lead))}catch{}
+    trackEvent("generate_lead");
 
     // Dispara o POST para o n8n
     const webhookPromise=postWebhook(lead);
@@ -918,7 +1010,6 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
     const manualLink=new URL(CFG.manualUrl,window.location.href);
     new URLSearchParams(location.search).forEach((v,k)=>manualLink.searchParams.set(k,v));
     manualLink.searchParams.set("src","quiz_sucesso");
-    manualLink.searchParams.set("lead",encodeURIComponent(lead.nome));
 
     // Dispara evento de ebook_click antes de redirecionar
     const payload={
@@ -928,6 +1019,9 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
       data:new Date().toISOString()
     };
     postWebhook(payload);
+    trackEvent("click_offer",{
+      offer:"manual_espiritual_familiar"
+    });
     if(typeof fbq==="function") fbq("track","InitiateCheckout",{content_name:"Manual Espiritual Familiar"});
 
     // Redireciona para LP6
@@ -947,6 +1041,7 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
   addEventListener("pageshow",e=>{ if(e.persisted) render(); });
 
   render();
+  trackEvent("quiz_start");
 })();
 </script>
 </body>

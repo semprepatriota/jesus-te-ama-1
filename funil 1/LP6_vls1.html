@@ -13,17 +13,8 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TPRFFVTM');</script>
 <!-- End Google Tag Manager -->
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-BZZ0W0PW2T"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-BZZ0W0PW2T');
-</script>
-
 <title>Masterclass Gratuita — Proteja Sua Família em 7 Dias</title>
+<link rel="canonical" href="https://www.hfnew.com.br/funil%201/LP6_vls1.html">
 <meta name="referrer" content="no-referrer-when-downgrade">
 <script>(function(){function ensureRel(){document.querySelectorAll('a[target="_blank"]').forEach(function(a){var r=(a.getAttribute('rel')||'').split(/\s+/).filter(Boolean);if(r.indexOf('noopener')===-1) r.push('noopener');if(r.indexOf('noreferrer')===-1) r.push('noreferrer');a.setAttribute('rel', r.join(' '));});}function normHover(){if(!document.getElementById('hoverScaleStyle')){var s=document.createElement('style');s.id='hoverScaleStyle';s.textContent='.hover-scale{transition:transform .2s}.hover-scale:hover{transform:scale(1.05)}';document.head.appendChild(s);}document.querySelectorAll('[onmouseover],[onmouseout]').forEach(function(el){el.classList.add('hover-scale');el.removeAttribute('onmouseover');el.removeAttribute('onmouseout');});}if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){ensureRel();normHover();});else{ensureRel();normHover();}})();</script>
 <style>
@@ -190,6 +181,16 @@ height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
 <footer>© 2026 Família Sob a Graça · Este webinar é uma aula online gratuita · Nenhuma promessa de resultado específico é feita</footer>
 
 <script>
+function trackEvent(eventName, params = {}) {
+  window.dataLayer = window.dataLayer || [];
+  window.dataLayer.push({
+    event: eventName,
+    page_type: 'vsl',
+    funnel_name: 'familia_protegida',
+    ...params
+  });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
   const vsl = document.getElementById('vsl');
   const playOverlay = document.getElementById('playOverlay');
@@ -197,6 +198,29 @@ document.addEventListener('DOMContentLoaded', () => {
   const controls = document.getElementById('controls');
   const progressFill = document.getElementById('progressFill');
   if (!vsl) return;
+  trackEvent('vsl_page_view');
+
+  const checkoutParams = new URLSearchParams(window.location.search);
+  const allowedCheckoutParams = [
+    'src', 'sck', 'utm_source', 'utm_medium', 'utm_campaign',
+    'utm_term', 'utm_content', 's1', 's2', 's3'
+  ];
+
+  document.querySelectorAll('a[href*="pay.kiwify.com.br"]').forEach((el, index) => {
+    const checkoutUrl = new URL(el.href);
+    allowedCheckoutParams.forEach((param) => {
+      const value = checkoutParams.get(param);
+      if (value) checkoutUrl.searchParams.set(param, value);
+    });
+    el.href = checkoutUrl.toString();
+
+    el.addEventListener('click', () => {
+      trackEvent('click_checkout', {
+        offer: 'kit_familia_protecao',
+        cta_position: index + 1
+      });
+    }, { passive: true });
+  });
 
   // Garantir que não haja autoplay e que o overlay permaneça visível até o lead clicar
   try { vsl.autoplay = false; vsl.pause(); } catch(e){}
@@ -217,6 +241,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (revealed) return;
     revealed = true;
     document.querySelectorAll('.locked').forEach(el => el.classList.add('revealed'));
+    trackEvent('vsl_offer_revealed');
   }
 
   // Clique no overlay inicial → tenta dar play com som. Se for bloqueado, NÃO inicia automaticamente com som mudo.
@@ -229,6 +254,7 @@ document.addEventListener('DOMContentLoaded', () => {
         p.then(() => {
           playOverlay.classList.add('hidden');
           if (controls) controls.classList.add('visible');
+          trackEvent('vsl_play');
         }).catch(() => {
           // Navegador bloqueou reprodução com som — manter overlay visível e orientar o usuário
           const span = playOverlay.querySelector('span');
@@ -269,6 +295,7 @@ document.addEventListener('DOMContentLoaded', () => {
   vsl.addEventListener('ended', () => {
     if (progressFill) progressFill.style.width = '100%';
     revealAll();
+    trackEvent('vsl_complete');
   });
 
   // Bloquear tentativa de seek para frente
