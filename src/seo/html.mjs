@@ -4,12 +4,12 @@ export function elements(node, predicate) { const result = []; function visit(it
 export const text = node => node.nodeName === '#text' ? node.value : (node.childNodes ?? []).map(text).join('');
 export const escape = value => String(value).replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
 const descriptions = {
-  '/': 'Ferramentas de vídeo no navegador: comprimir, converter para MP4, cortar, extrair áudio, capturar miniaturas e limpar campos de metadados de uma cópia.',
+  '/': 'Limpe metadados de uma cópia do vídeo no navegador. Inspecione campos suportados, converta para MP4, corte ou comprima vídeos sem enviar o arquivo.',
   '/comprimir-video/': 'Reduza o tamanho de uma cópia do vídeo, escolha qualidade e resolução e compare o resultado. Processamento local, com limites e suporte de codecs informados.',
   '/video-para-whatsapp/': 'Prepare uma cópia MP4 com meta de tamanho para compartilhar no WhatsApp. Confira o arquivo final e teste o envio no seu aparelho; o original é preservado.',
   '/converter-para-mp4/': 'Converta vídeos compatíveis para MP4 ou reempacote trilhas H.264/AAC quando possível. Confira os codecs suportados e preserve o arquivo original.',
   '/cortar-video/': 'Selecione início e fim e gere um trecho MP4 do vídeo no navegador. Confira a cópia antes de baixar, sem substituir o original.',
-  '/limpar-metadados-video/': 'Inspecione campos descritivos suportados do vídeo, escolha o que limpar e confira uma cópia reinspecionada. Limpeza seletiva não garante anonimato.',
+  '/limpar-metadados-video/': 'Limpe metadados de vídeo online: inspecione campos pessoais suportados, escolha o que remover e confira uma cópia. Sem upload; não garante anonimato.',
   '/extrair-audio/': 'Extraia uma trilha de áudio compatível do vídeo para WAV ou M4A no navegador. Confira a reprodução da cópia e os limites de formato.',
   '/capturar-miniatura/': 'Escolha um momento do vídeo e capture um quadro para baixar em PNG ou JPEG. Veja a imagem real antes do download, com processamento no navegador.'
 };

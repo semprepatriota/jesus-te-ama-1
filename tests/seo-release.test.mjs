@@ -12,6 +12,23 @@ import { spawnSync } from 'node:child_process';
 const { routes } = JSON.parse(fs.readFileSync('.portal-planejamento/rotas.json', 'utf8'));
 const rules = JSON.parse(fs.readFileSync('.portal-planejamento/regras.json', 'utf8'));
 const origin = rules.canonicalOrigin;
+
+test('SEO de entrada usa ferramentas de video e nunca o titulo do quiz antigo', () => {
+  for (const url of ['/', '/limpar-metadados-video/']) {
+    const route = routes.find(item => item.url === url);
+    const tree = parse(fs.readFileSync(route.file, 'utf8'));
+    const title = text(elements(tree, node => node.tagName === 'title')[0]);
+    const description = attr(elements(tree, node => node.tagName === 'meta' && attr(node, 'name') === 'description')[0], 'content');
+    assert.ok(title.startsWith('Limpar metadados de v\u00eddeo'));
+    assert.ok(title.endsWith('HF Ferramentas'));
+    assert.ok(description.startsWith('Limpe metadados'));
+    assert.ok(!/quiz|espiritualmente|qual.{0,30}n[i\u00ed]vel/i.test(title + description));
+    const graph = JSON.parse(text(elements(tree, node => node.tagName === 'script' && attr(node, 'type') === 'application/ld+json')[0]));
+    assert.equal(graph.name, title);
+    assert.equal(graph.description, description);
+    assert.equal(attr(elements(tree, node => node.tagName === 'meta' && attr(node, 'property') === 'og:title')[0], 'content'), title);
+  }
+});
 test('pacote normaliza CRLF/LF sem alterar os arquivos originais', () => {
   const input = Buffer.from('<p>Exemplo</p>\r\n'); const copy = Buffer.from(input);
   assert.equal(publicBytes('index.html', input).toString(), '<p>Exemplo</p>\n'); assert.deepEqual(input, copy);
