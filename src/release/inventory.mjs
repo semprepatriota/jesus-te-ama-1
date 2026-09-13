@@ -6,3 +6,7 @@ export const publicAssets = Object.freeze([
   ...['arrow-right', 'arrow-up-right', 'audio-lines', 'check', 'chevron-down', 'download', 'film', 'hard-drive', 'image', 'maximize', 'message-circle', 'minimize-2', 'pause', 'play', 'rotate-ccw', 'scissors', 'search', 'shield-check', 'upload', 'volume-2', 'volume-x', 'x'].map(name => `icons/${name}.svg`)
 ].map(name => `_portal/${name}`));
 export function packageFiles(routes, aliases, production) { return [...routes.filter(route => production || route.group !== 'error').map(route => route.file), ...aliases.map(alias => alias.source), ...publicAssets, 'CNAME', 'robots.txt', 'sitemap.xml'].sort(); }
+export function publicBytes(file, data) {
+  const bytes = Buffer.isBuffer(data) ? data : Buffer.from(data);
+  return /\.(html|css|js|svg|txt|xml)$/i.test(file) ? Buffer.from(bytes.toString('utf8').replaceAll('\r\n', '\n')) : bytes;
+}

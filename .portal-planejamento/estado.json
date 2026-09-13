@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "updatedAt": "2026-09-13T01:09:16.924Z",
+  "updatedAt": "2026-09-13T15:05:54.371Z",
   "stages": [
     {
       "id": 1,
@@ -40,15 +40,21 @@
     },
     {
       "id": 5,
-      "status": "active",
-      "completedAt": null,
-      "evidence": null
+      "status": "done",
+      "completedAt": "2026-09-13T15:05:53.369Z",
+      "evidence": {
+        "file": ".portal-planejamento/evidencias/etapa-05-conclusao-2026-09-13T15-05-52-377Z.json",
+        "sha256": "d99202ce0c5768a5407c4d1a5417862d3cab7162eee58e3ef4fbacb86b8b9235"
+      }
     },
     {
       "id": 6,
-      "status": "pending",
-      "completedAt": null,
-      "evidence": null
+      "status": "done",
+      "completedAt": "2026-09-13T15:05:54.370Z",
+      "evidence": {
+        "file": ".portal-planejamento/evidencias/etapa-06-conclusao-2026-09-13T15-05-52-377Z.json",
+        "sha256": "7e57c2b151b79abf4850301414945ccaee5b0095e864a9fb8c7e7e330f991a46"
+      }
     },
     {
       "id": 7,

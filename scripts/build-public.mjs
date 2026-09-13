@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { build } from 'esbuild';
 import { prepareHtml, robots, sitemap } from '../src/seo/html.mjs';
-import { packageFiles, publicAssets } from '../src/release/inventory.mjs';
+import { packageFiles, publicAssets, publicBytes } from '../src/release/inventory.mjs';
 import { measurementConfig, advertisingConfig } from '../src/measurement/config.js';
 import { requirePreviousStages } from '../.portal-planejamento/scripts/controle-lib.mjs';
 const rules = JSON.parse(fs.readFileSync('.portal-planejamento/regras.json', 'utf8'));
@@ -17,7 +17,7 @@ fs.mkdirSync(output, { recursive: true });
 const allowed = packageFiles(routes, rules.compatibilityAliases, production);
 function checkExisting(dir, parent = '') { for (const entry of fs.readdirSync(dir, { withFileTypes: true })) { const name = parent + entry.name; if (entry.isSymbolicLink()) throw new Error(`Link no pacote: ${name}`); if (entry.isDirectory()) checkExisting(path.join(dir, entry.name), name + '/'); else if (!allowed.includes(name)) throw new Error(`Arquivo inesperado em dist; revisar sem apagar: ${name}`); } }
 checkExisting(output);
-function write(file, data) { const target = path.join(output, file); fs.mkdirSync(path.dirname(target), { recursive: true }); fs.writeFileSync(target, data); }
+function write(file, data) { const target = path.join(output, file); fs.mkdirSync(path.dirname(target), { recursive: true }); fs.writeFileSync(target, publicBytes(file, data)); }
 for (const route of routes.filter(route => production || route.group !== 'error')) write(route.file, prepareHtml(fs.readFileSync(route.file, 'utf8'), route, { origin: rules.canonicalOrigin, production }));
 for (const alias of rules.compatibilityAliases) write(alias.source, fs.readFileSync(alias.source));
 const compiled = new Set(['_portal/video-tools.js', '_portal/extra-tools.js', '_portal/measurement.js', '_portal/engine/engine.js', '_portal/engine/video-worker.js']);

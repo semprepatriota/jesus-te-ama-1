@@ -6,12 +6,21 @@ import os from 'node:os';
 import { parse as yaml } from 'yaml';
 import { parse } from 'parse5';
 import { prepareHtml, sitemap, robots, elements, attr, text } from '../src/seo/html.mjs';
-import { packageFiles } from '../src/release/inventory.mjs';
+import { packageFiles, publicBytes } from '../src/release/inventory.mjs';
 import { verifyPublic } from '../scripts/verify-public.mjs';
 import { spawnSync } from 'node:child_process';
 const { routes } = JSON.parse(fs.readFileSync('.portal-planejamento/rotas.json', 'utf8'));
 const rules = JSON.parse(fs.readFileSync('.portal-planejamento/regras.json', 'utf8'));
 const origin = rules.canonicalOrigin;
+test('pacote normaliza CRLF/LF sem alterar os arquivos originais', () => {
+  const input = Buffer.from('<p>Exemplo</p>\r\n'); const copy = Buffer.from(input);
+  assert.equal(publicBytes('index.html', input).toString(), '<p>Exemplo</p>\n'); assert.deepEqual(input, copy);
+  assert.deepEqual(publicBytes('index.html', input), publicBytes('index.html', '<p>Exemplo</p>\n'));
+});
+test('videos, imagens e fontes preservam todos os bytes binarios', () => {
+  const bytes = Buffer.from([0, 13, 10, 255, 128, 9]);
+  for (const file of ['amostra.mp4', 'imagem.jpg', 'fonte.ttf']) assert.deepEqual(publicBytes(file, bytes), bytes);
+});
 test('SEO e idempotente e preserva corpo e rodape de todas as paginas', () => {
   for (const route of routes.filter(route => route.group !== 'error')) {
     const html = fs.readFileSync(route.file, 'utf8'), prepared = prepareHtml(html, route);
