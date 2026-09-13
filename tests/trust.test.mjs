@@ -30,7 +30,7 @@ test('identidade e contato possuem aprovacao explicita sem dado de login', () =>
 });
 test('rodape inclui sete rotas em todas as 26 paginas preparadas', () => {
   assert.equal(trustLinks.length, 7);
-  for (const route of routes.filter(route => route.group !== 'error')) {
+  for (const route of routes.filter(route => !['error','retired'].includes(route.group))) {
     const html = fs.readFileSync(route.file, 'utf8');
     const footer = html.match(/<footer\b[^>]*>[\s\S]*?<\/footer>/g);
     assert.equal(footer.length, 1);

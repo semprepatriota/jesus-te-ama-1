@@ -20,7 +20,7 @@ test('todos os guias possuem procedimento e exemplos distintos', () => {
 });
 test('fontes primarias e relacoes validas sem autor humano ficticio', () => {
   for (const guide of guides) {
-    assert.ok(routes.some(route => route.url === `/${guide.tool}/` && route.group === 'tool'));
+    assert.ok(routes.some(route => route.url === `/${guide.tool}/` && ['tool','retired'].includes(route.group)));
     for (const slug of guide.related) assert.ok(guides.some(other => other.slug === slug && other !== guide));
     for (const key of guide.sources) assert.ok(/^(developer\.mozilla\.org|mediabunny\.dev)$/.test(new URL(sources[key].url).hostname));
     const html = fs.readFileSync(`guias/${guide.slug}/index.html`, 'utf8');
@@ -30,6 +30,7 @@ test('fontes primarias e relacoes validas sem autor humano ficticio', () => {
 });
 test('cada ferramenta inclui ao menos um link editorial', () => {
   for (const slug of new Set(guides.map(guide => guide.tool))) {
+    if (routes.some(route => route.url === `/${slug}/` && route.group === 'retired')) continue;
     const html = fs.readFileSync(`${slug}/index.html`, 'utf8');
     assert.ok(html.includes('class="guide-connections"'));
     for (const guide of guides.filter(guide => guide.tool === slug)) assert.ok(html.includes(`../guias/${guide.slug}/index.html`));

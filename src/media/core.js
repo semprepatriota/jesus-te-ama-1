@@ -27,7 +27,11 @@ export async function describe(input, limits) {
     colorSpace: await video.getColorSpace(), hdr: await video.hasHighDynamicRange(),
     videoDecodable: false, audio: null,
   };
-  if (audio) metadata.audio = { codec: await audio.getCodec(), channels: await audio.getNumberOfChannels(), sampleRate: await audio.getSampleRate(), decodable: false };
+  if (audio) {
+    const start = Math.max(0, await audio.getFirstTimestamp());
+    const end = await audio.computeDuration();
+    metadata.audio = { codec: await audio.getCodec(), channels: await audio.getNumberOfChannels(), sampleRate: await audio.getSampleRate(), start, end, duration: end - start, decodable: false };
+  }
   validateMetadata(metadata, limits);
   // Guard coded dimensions too; an unusual pixel aspect ratio must not bypass the decoder budget.
   if (metadata.codedWidth * metadata.codedHeight > limits.pixels) fail('RESOLUTION_LIMIT', 'As dimensoes codificadas excedem o limite local.');

@@ -6,7 +6,8 @@
   "expectedPageCount": 27,
   "groups": {
     "home": 1,
-    "tool": 7,
+    "tool": 5,
+    "retired": 2,
     "hub": 1,
     "guide": 10,
     "trust": 7,
@@ -52,7 +53,7 @@
   "release": {
     "indexedToolsApprovedByUser": true,
     "indexedToolsApprovalDate": "2026-09-13",
-    "indexedToolsApprovalScope": "Home e sete ferramentas; guias e demais paginas pendentes continuam noindex. Nao conclui homologacao final.",
+    "indexedToolsApprovalScope": "Home e cinco ferramentas ativas. Usuario retirou WhatsApp e conversor MP4 em 13/09/2026; seus enderecos ficam descontinuados e noindex. Guias e demais paginas pendentes continuam noindex. Nao conclui homologacao final.",
     "publicPreviewApprovedByUser": true,
     "publicPreviewApprovalDate": "2026-09-13",
     "publicPreviewFinalReviews": "after-publication-by-user-request",
@@ -261,11 +262,11 @@
     },
     {
       "source": "funil 1/LP1_MOBILE.html",
-      "target": "/video-para-whatsapp/"
+      "target": "/"
     },
     {
       "source": "funil 1/LP2_VSL_alta_conversao.html",
-      "target": "/converter-para-mp4/"
+      "target": "/"
     },
     {
       "source": "funil 1/LP3_isca_gratuita_captura.html",
@@ -296,7 +297,8 @@
       "target": "/privacidade/"
     }
   ],
-  "scopeRevision": 2,
+  "scopeRevision": 3,
+  "retirementApproval": "Usuario confirmou retirar WhatsApp e MP4 em 13/09/2026. Permanecem cinco ferramentas e dois enderecos descontinuados, sem anuncios, indexacao ou formulario de processamento. Evidencias das etapas anteriores sao historicas.",
   "stage2": {
     "snapshotManifest": ".portal-planejamento/backups/antes-etapa-02-2026-09-12T23-36-33-140Z/manifesto.json",
     "snapshotSha256": "2625bad71cdf6979d73ac254ae096c392639b1861eb5943aee45ca45bc6c25a2",

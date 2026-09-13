@@ -2,8 +2,6 @@
   'use strict';
   const tools = {
     'comprimir-video': ['Um arquivo mais leve.', 'Equil\u00edbrio entre tamanho, resolu\u00e7\u00e3o e qualidade para o seu destino.', 'minimize-2'],
-    'video-para-whatsapp': ['Seu v\u00eddeo na conversa.', 'Uma escolha de tamanho e qualidade pensada para compartilhar por mensagem.', 'message-circle'],
-    'converter-para-mp4': ['Um formato para mais destinos.', 'Convers\u00e3o para MP4, conforme o formato e o codec suportados.', 'film'],
     'cortar-video': ['Fique com o melhor trecho.', 'Defina o in\u00edcio e o fim para guardar a parte que importa.', 'scissors'],
     'limpar-metadados-video': ['Escolha os dados que ficam.', 'Inspecione os campos pessoais suportados, escolha o que remover e confira a c\u00f3pia.', 'shield-check'],
     'extrair-audio': ['D\u00ea espa\u00e7o ao som.', 'Separe a trilha de \u00e1udio do seu v\u00eddeo em um novo arquivo.', 'audio-lines'],
@@ -135,8 +133,8 @@
     detachFile();
     video.poster = '_portal/amostra.jpg';
     video.src = '_portal/amostra.mp4';
-    video.setAttribute('aria-label', 'V\u00eddeo de amostra: flores ao vento');
-    get('file-label').textContent = 'Flores ao vento \u00b7 MP4';
+    video.setAttribute('aria-label', 'Video de amostra enviado pelo usuario, cinco segundos');
+    get('file-label').textContent = 'Amostra HF \u00b7 MP4 \u00b7 5 segundos';
     get('source-label').textContent = 'Amostra';
     resetButton.hidden = true;
     input.value = '';

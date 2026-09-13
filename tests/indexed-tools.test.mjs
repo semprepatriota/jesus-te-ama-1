@@ -10,9 +10,9 @@ const rules = JSON.parse(fs.readFileSync('.portal-planejamento/regras.json', 'ut
 const { routes } = JSON.parse(fs.readFileSync('.portal-planejamento/rotas.json', 'utf8'));
 const origin = rules.canonicalOrigin;
 
-test('indexacao seletiva libera exatamente home e sete ferramentas, nunca guias ou 404', () => {
+test('indexacao seletiva libera home e cinco ferramentas, nunca guias, retiradas ou 404', () => {
   requireIndexedToolsApproval(rules, routes);
-  assert.equal(indexedToolUrls.length, 8);
+  assert.equal(indexedToolUrls.length, 6);
   for (const route of routes) {
     const expected = indexedToolUrls.includes(route.url);
     const tree = parse(prepareHtml(fs.readFileSync(route.file, 'utf8'), route, { indexedTools: true }));
@@ -26,9 +26,9 @@ test('indexacao seletiva libera exatamente home e sete ferramentas, nunca guias 
   assert.equal(canIndexRoute({ url: '/', group: 'guide', indexable: true }, { indexedTools: true }), false);
 });
 
-test('sitemap seletivo possui somente oito canonicas e permite leitura do noindex', () => {
+test('sitemap seletivo possui somente seis canonicas e permite leitura do noindex', () => {
   const xml = sitemap(routes, origin, false, true);
-  assert.equal((xml.match(/<loc>/g) || []).length, 8);
+  assert.equal((xml.match(/<loc>/g) || []).length, 6);
   for (const route of routes) assert.equal(xml.includes(`<loc>${origin}${route.url}</loc>`), indexedToolUrls.includes(route.url));
   assert.equal(robots(origin, false, true), `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);
   assert.equal((sitemap(routes, origin, false).match(/<loc>/g) || []).length, 0);
@@ -41,9 +41,9 @@ test('indexacao seletiva recusa autorizacao ausente, inventario ampliado e modos
   assert.throws(() => canIndexRoute(routes[0], { production: true, indexedTools: true }));
 });
 
-test('envio indexavel exige opcao manual, autorizacao especifica e exatamente oito URLs', () => {
+test('envio indexavel exige opcao manual, autorizacao especifica e exatamente seis URLs', () => {
   const hash = 'a'.repeat(64), commit = 'b'.repeat(40);
-  const context = { approved: 'true', indexedTools: true, indexedToolsApproved: true, repository: 'semprepatriota/jesus-te-ama-1', ref: 'refs/heads/main', commit, expectedCommit: commit, expectedHash: hash, packageCheck: { passed: true, mode: 'public-preview-indexed-tools', pages: 27, files: 94, sha256: hash, indexedPages: 8, indexedUrls: [...indexedToolUrls].sort() } };
+  const context = { approved: 'true', indexedTools: true, indexedToolsApproved: true, repository: 'semprepatriota/jesus-te-ama-1', ref: 'refs/heads/main', commit, expectedCommit: commit, expectedHash: hash, packageCheck: { passed: true, mode: 'public-preview-indexed-tools', pages: 27, files: 94, sha256: hash, indexedPages: 6, indexedUrls: [...indexedToolUrls].sort() } };
   assert.equal(verifyPreviewAuthorization(context).finalValidationComplete, false);
   for (const change of [{ indexedToolsApproved: false }, { indexedTools: false }, { approved: 'false' }, { expectedHash: 'c'.repeat(64) }, { packageCheck: { ...context.packageCheck, indexedPages: 26 } }, { packageCheck: { ...context.packageCheck, indexedUrls: [...context.packageCheck.indexedUrls, '/guias/'] } }]) assert.throws(() => verifyPreviewAuthorization({ ...context, ...change }));
   const workflow = yaml(fs.readFileSync('.github/workflows/static.yml', 'utf8'));

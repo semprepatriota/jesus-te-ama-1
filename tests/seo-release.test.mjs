@@ -48,12 +48,12 @@ test('modo de producao tem canonical/robots coerentes e schema sem avaliacoes in
   for (const route of routes.filter(route => route.group !== 'error')) {
     const tree = parse(prepareHtml(fs.readFileSync(route.file, 'utf8'), route, { production: true }));
     const canonical = elements(tree, node => node.tagName === 'link' && attr(node, 'rel') === 'canonical'); assert.equal(canonical.length, 1); assert.equal(attr(canonical[0], 'href'), origin + route.url);
-    const meta = elements(tree, node => node.tagName === 'meta' && attr(node, 'name') === 'robots'); assert.equal(attr(meta[0], 'content'), 'index, follow');
+    const meta = elements(tree, node => node.tagName === 'meta' && attr(node, 'name') === 'robots'); assert.equal(attr(meta[0], 'content'), route.indexable ? 'index, follow' : 'noindex, nofollow');
     const graph = JSON.parse(text(elements(tree, node => node.tagName === 'script' && attr(node, 'type') === 'application/ld+json')[0])); assert.equal(graph.url, origin + route.url); assert.ok(!graph.aggregateRating && !graph.offers && !graph.author);
   }
 });
-test('sitemap de producao inclui somente as 26 canonicas, nunca alias ou 404', () => {
-  const xml = sitemap(routes, origin, true); assert.equal((xml.match(/<loc>/g) ?? []).length, 26);
+test('sitemap de producao inclui 24 canonicas, nunca retiradas, alias ou 404', () => {
+  const xml = sitemap(routes, origin, true); assert.equal((xml.match(/<loc>/g) ?? []).length, 24);
   for (const route of routes) assert.equal(xml.includes(`<loc>${origin}${route.url}</loc>`), route.indexable);
   assert.ok(!xml.includes('funil') && !xml.includes('LP1_') && !xml.includes('lastmod'));
   assert.equal(robots(origin, true), `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n`);

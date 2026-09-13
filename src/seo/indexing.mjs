@@ -1,8 +1,6 @@
 export const indexedToolUrls = Object.freeze([
   '/',
   '/comprimir-video/',
-  '/video-para-whatsapp/',
-  '/converter-para-mp4/',
   '/cortar-video/',
   '/limpar-metadados-video/',
   '/extrair-audio/',

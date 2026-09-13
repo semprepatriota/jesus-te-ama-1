@@ -36,3 +36,9 @@ Entregar as tres primeiras ferramentas usando a base comum.
 Registrar cada criterio com resultado real, metodo, arquivo de evidencia e SHA-256.
 Criterio pendente ou falho impede concluir. Revisao manual identifica o revisor.
 Consultar o modelo: `node .portal-planejamento/scripts/verificar.mjs modelo 5`.
+# Nota de revisao 3
+
+Em 13/09/2026 o usuario retirou WhatsApp e conversor MP4. Somente o compressor
+continua ativo nesta etapa; as outras duas paginas sao acessos descontinuados
+noindex para o catalogo. Os criterios e comprovacoes anteriores abaixo sao
+historicos. Esta retirada nao certifica novos testes fisicos ou homologacao final.

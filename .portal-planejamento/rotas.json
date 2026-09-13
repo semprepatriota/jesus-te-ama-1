@@ -21,21 +21,21 @@
     },
     {
       "url": "/video-para-whatsapp/",
-      "title": "Video para WhatsApp",
-      "group": "tool",
+      "title": "Ferramenta descontinuada: compartilhamento",
+      "group": "retired",
       "stage": 5,
       "file": "video-para-whatsapp/index.html",
-      "adsCandidate": true,
-      "indexable": true
+      "adsCandidate": false,
+      "indexable": false
     },
     {
       "url": "/converter-para-mp4/",
-      "title": "Converter para MP4",
-      "group": "tool",
+      "title": "Ferramenta descontinuada: conversao",
+      "group": "retired",
       "stage": 5,
       "file": "converter-para-mp4/index.html",
-      "adsCandidate": true,
-      "indexable": true
+      "adsCandidate": false,
+      "indexable": false
     },
     {
       "url": "/cortar-video/",

@@ -28,10 +28,11 @@ export async function safePath(root, relative) {
 }
 
 export function validatePlan(rules, routes) {
-  const groups = { home: 1, tool: 7, hub: 1, guide: 10, trust: 7, error: 1 };
+  const groups = { home: 1, tool: 5, retired: 2, hub: 1, guide: 10, trust: 7, error: 1 };
   const pages = [0, 0, 1, 0, 3, 4, 11, 7, 0, 1];
-  const tools = ['/comprimir-video/', '/video-para-whatsapp/', '/converter-para-mp4/', '/cortar-video/', '/limpar-metadados-video/', '/extrair-audio/', '/capturar-miniatura/'];
-  requireCheck(rules.schemaVersion === 1 && rules.scopeRevision === 2 && rules.expectedPageCount === 27, 'Versao ou contagem esperada do plano invalida.');
+  const tools = ['/comprimir-video/', '/cortar-video/', '/limpar-metadados-video/', '/extrair-audio/', '/capturar-miniatura/'];
+  const retired = ['/video-para-whatsapp/', '/converter-para-mp4/'];
+  requireCheck(rules.schemaVersion === 1 && rules.scopeRevision === 3 && rules.expectedPageCount === 27 && rules.retirementApproval, 'Versao ou contagem esperada do plano invalida.');
   requireCheck(rules.canonicalOrigin === 'https://www.hfnew.com.br', 'Dominio canonico divergente do aprovado.');
   requireCheck(Array.isArray(rules.phases) && rules.phases.length === 10, 'O plano deve conter dez etapas.');
   requireCheck(Array.isArray(routes) && routes.length === 27, 'O mapa deve conter exatamente 27 rotas.');
@@ -54,13 +55,14 @@ export function validatePlan(rules, routes) {
     requireCheck(Number.isInteger(item.stage) && item.stage >= 1 && item.stage <= 10, 'Etapa da rota invalida.');
     requireCheck(typeof item.adsCandidate === 'boolean' && typeof item.indexable === 'boolean', 'Politicas da rota incompletas.');
     if (item.group === 'error') requireCheck(!item.adsCandidate && !item.indexable, `404 nao pode receber anuncio ou sitemap editorial: ${item.url}`);
+    if (item.group === 'retired') requireCheck(retired.includes(item.url) && !item.adsCandidate && !item.indexable, `Endereco descontinuado invalido: ${item.url}`);
   }
   for (const [group, count] of Object.entries(groups)) {
     requireCheck(rules.groups?.[group] === count, `Contagem configurada divergente: ${group}`);
     requireCheck(routes.filter(item => item.group === group).length === count, `Quantidade incorreta no grupo ${group}.`);
   }
   const actualTools = routes.filter(item => item.group === 'tool').map(item => item.url);
-  requireCheck(tools.every(url => actualTools.includes(url)), 'As sete ferramentas devem incluir metadados de VIDEO e nao Reels/imagens.');
+  requireCheck(tools.every(url => actualTools.includes(url)), 'As cinco ferramentas devem incluir metadados de VIDEO e nao Reels/imagens.');
   requireCheck(!routes.some(item => /quiz|funil|LP[1-6]/i.test(item.url)), 'O funil foi retirado por autorizacao do usuario.');
   requireCheck(Array.isArray(rules.compatibilityAliases) && rules.compatibilityAliases.length === 10, 'Mapa de reaproveitamento incompleto.');
   const aliasNames = new Set();
@@ -80,7 +82,7 @@ export function validatePlan(rules, routes) {
   });
   const last = rules.phases[9];
   requireCheck(Array.isArray(last.prePublishGates) && last.prePublishGates.length > 0 && last.prePublishGates.every(id => last.gates.includes(id)) && !last.prePublishGates.includes('verificacao-online'), 'Criterios antes/depois da publicacao incorretos.');
-  return { phases: 10, pages: 27, tools: 7, aliases: rules.compatibilityAliases.length, groups };
+  return { phases: 10, pages: 27, tools: 5, retired: 2, aliases: rules.compatibilityAliases.length, groups };
 }
 
 export function validateState(rules, state) {

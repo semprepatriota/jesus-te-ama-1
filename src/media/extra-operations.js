@@ -3,6 +3,7 @@ import { inputFor, describe, validateOutput } from './core.js';
 import { LIMITS, fail, exportSettings } from './policy.js';
 import { BoundedOutput } from './bounded-output.js';
 import { metadataFields, removeMetadata, cutRange } from './metadata-policy.js';
+import { audioDuration, validAudioDuration } from './audio-policy.js';
 
 function progressCallback(conversion, store, callback) {
   let previous = -Infinity;
@@ -39,7 +40,7 @@ export async function operate(file, operation, options = {}, limits = LIMITS, on
       config = { copy: { mode: 'forced' }, tags: cleaned, video: { codec: 'avc' }, audio: { codec: 'aac' } };
     } else if (operation === 'cut') {
       trim = cutRange(options, metadata.duration);
-      settings = exportSettings(metadata, { maxHeight: options.maxHeight || 1080 });
+      settings = exportSettings(metadata, { maxHeight: options.maxHeight || 1080, bitrate: options.bitrate || 3000000 });
       if (!metadata.capabilities.transcodeMp4 || audio && !await canEncodeAudio('aac', { numberOfChannels: metadata.audio.channels, sampleRate: metadata.audio.sampleRate })) fail('CODEC_UNSUPPORTED', 'O navegador nao oferece codecs para corte exato com audio.');
       config = { trim, copy: false, video: { codec: 'avc', width: settings.width, height: settings.height, fit: 'contain', quality: new Quality({ bitrate: settings.bitrate }), forceTranscode: true, allowRotationMetadata: false }, audio: { codec: 'aac', quality: new Quality({ bitrate: 128000 }), forceTranscode: true } };
     } else if (operation === 'audio') {
@@ -64,9 +65,10 @@ export async function operate(file, operation, options = {}, limits = LIMITS, on
       try {
         const tracks = await check.getTracks(), track = await check.getPrimaryAudioTrack();
         const duration = await check.computeDuration();
-        if (tracks.length !== 1 || !track || Math.abs(duration - metadata.duration) > .25 || await track.getCodec() !== (extension === 'wav' ? 'pcm-s16' : 'aac')) fail('INVALID_OUTPUT', 'Formato, trilha ou duracao de audio incorretos.');
+        const expected = audioDuration(metadata.audio);
+        if (tracks.length !== 1 || !track || !validAudioDuration(duration, expected) || await track.getCodec() !== (extension === 'wav' ? 'pcm-s16' : 'aac')) fail('INVALID_OUTPUT', 'Formato, trilha ou duracao de audio incorretos.');
         const sample = await new AudioSampleSink(track).getSample(await track.getFirstTimestamp()); if (!sample) fail('INVALID_OUTPUT', 'Saida de audio nao decodificavel.'); sample.close();
-        resultMetadata = { duration, codec: await track.getCodec(), channels: await track.getNumberOfChannels(), sampleRate: await track.getSampleRate() };
+        resultMetadata = { duration, sourceStart: metadata.audio.start, sourceDuration: expected, codec: await track.getCodec(), channels: await track.getNumberOfChannels(), sampleRate: await track.getSampleRate() };
       } finally { check.dispose(); }
     } else {
       const source = trim ? { ...metadata, duration: trim.end - trim.start } : metadata;
