@@ -44,3 +44,15 @@ test('avisos nao ocultam rede, mensagem externa ou limites de metadados', () => 
   for (const word of ['localStorage', 'IndexedDB', 'mem&oacute;ria', 'Datas t&eacute;cnicas', 'provedor', 'legisla&ccedil;&atilde;o', '48 MiB', '180 segundos']) assert.ok(text.includes(word));
   assert.ok(!/100% seguro|totalmente an[o&]nimo|sem perda garantida/i.test(text));
 });
+
+test('prazo aprovado de atendimento e manual e nao promete exclusao dos provedores', () => {
+  assert.equal(publicConfig.supportOperationApprovedByUser, true);
+  assert.equal(publicConfig.supportAccess, 'responsible-only');
+  assert.equal(publicConfig.supportRetentionDaysAfterResolution, 30);
+  assert.equal(publicConfig.supportDeletionMethod, 'manual');
+  const privacy = JSON.stringify(trustPages.find(page => page.slug === 'privacidade'));
+  assert.ok(privacy.includes('30 dias'));
+  assert.ok(privacy.includes('manualmente'));
+  assert.ok(privacy.includes('backups'));
+  assert.ok(privacy.includes('N&atilde;o &eacute; uma promessa'));
+});

@@ -10,7 +10,7 @@ on:
         type: boolean
         default: false
       evidence:
-        description: 'Caminho relativo da comprovacao da etapa 10'
+        description: 'Recibo JSON assinado pelo gate local completo, sem backups privados'
         type: string
         default: ''
 permissions:
@@ -51,12 +51,16 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
+      - name: Autorizar Somente com Gate Local Assinado
+        env:
+          RELEASE_EVIDENCE: ${{ inputs.evidence }}
+        run: node scripts/verify-release-attestation.mjs --authorization-only
       - run: node scripts/build-public.mjs --production
       - run: node scripts/verify-public.mjs --production
       - name: Gate Obrigatorio da Etapa 10
         env:
           RELEASE_EVIDENCE: ${{ inputs.evidence }}
-        run: node .portal-planejamento/scripts/verificar.mjs publicacao "$RELEASE_EVIDENCE" dist
+        run: node scripts/verify-release-attestation.mjs
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:

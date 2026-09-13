@@ -52,7 +52,10 @@ test('workflow tem validacao automatica e deploy manual com gate antes de upload
   assert.equal(workflow.on.workflow_dispatch.inputs.release.default, false); assert.equal(workflow.jobs.deploy.needs, 'validate'); assert.ok(workflow.jobs.deploy.if.includes("workflow_dispatch") && workflow.jobs.deploy.if.includes('inputs.release == true'));
   assert.equal(workflow.permissions.pages, undefined);
   const steps = workflow.jobs.deploy.steps, upload = steps.findIndex(step => step.uses?.startsWith('actions/upload-pages-artifact@'));
-  assert.equal(steps[upload].with.path, 'dist'); assert.ok(steps.slice(0, upload).some(step => step.run?.includes('verificar.mjs publicacao'))); assert.ok(steps.slice(0, upload).some(step => step.run?.includes('verify-public.mjs --production')));
+  assert.equal(steps[upload].with.path, 'dist'); assert.ok(steps.slice(0, upload).some(step => step.run === 'node scripts/verify-release-attestation.mjs')); assert.ok(steps.slice(0, upload).some(step => step.run?.includes('verify-public.mjs --production')));
+  const authorization = steps.findIndex(step => step.run?.includes('verify-release-attestation.mjs --authorization-only'));
+  const build = steps.findIndex(step => step.run?.includes('build-public.mjs --production'));
+  assert.ok(authorization >= 0 && authorization < build);
   assert.ok(workflow.jobs.validate.steps.some(step => step.run === 'npm test'));
 });
 test('build de producao bloqueia dependencias antes de alterar dist', () => {

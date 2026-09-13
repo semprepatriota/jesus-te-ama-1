@@ -6,5 +6,9 @@ export const publicConfig = Object.freeze({
   emailPubliclyAuthorized: true,
   responsibleNamePubliclyAuthorized: true,
   mailboxConfirmedByUser: true,
-  mailboxIndependentDeliveryTest: false
+  mailboxIndependentDeliveryTest: false,
+  supportOperationApprovedByUser: true,
+  supportAccess: 'responsible-only',
+  supportRetentionDaysAfterResolution: 30,
+  supportDeletionMethod: 'manual'
 });

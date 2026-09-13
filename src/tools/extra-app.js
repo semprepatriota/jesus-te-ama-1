@@ -31,6 +31,13 @@ function buttons() {
   if (operation === 'thumbnail') supported &&= metadata.videoDecodable && !metadata.hdr && $('#timestamp').value !== '' && Number($('#timestamp').value) >= 0 && Number($('#timestamp').value) < metadata.duration;
   $('#export').disabled = busy || !supported; $('#cancel').hidden = !busy; $('#reset').disabled = !file;
   $('#options').querySelectorAll('input,select,button').forEach(control => { control.disabled = busy || !metadata; });
+  if (operation === 'clean') {
+    const fields = [...document.querySelectorAll('[data-field]')];
+    const selected = fields.filter(input => input.checked).length;
+    $('#all-fields').checked = fields.length > 0 && selected === fields.length;
+    $('#all-fields').indeterminate = selected > 0 && selected < fields.length;
+    $('#all-fields').disabled = busy || !metadata || fields.length === 0;
+  }
   if (operation === 'cut' && $('#view-result').getAttribute('aria-pressed') === 'true') for (const id of ['seek','set-start','set-end']) $(`#${id}`).disabled = true;
   if (operation === 'cut') $('#range-duration').textContent = `${Math.max(0, Number($('#end').value) - Number($('#start').value)).toFixed(2)} s de trecho`;
 }
@@ -104,7 +111,7 @@ $('#sample').addEventListener('click', async () => { const current = generation;
 $('#export').addEventListener('click', () => { void run(); }); $('#cancel').addEventListener('click',cancel); $('#reset').addEventListener('click',reset);
 $('#view-original').addEventListener('click', () => view()); $('#view-result').addEventListener('click', () => view(true));
 $('#options').addEventListener('input',buttons);
-if ($('#all-fields')) $('#all-fields').addEventListener('change', event => { document.querySelectorAll('[data-field]').forEach(input => { input.checked = event.target.checked; }); buttons(); });
+if ($('#all-fields')) $('#all-fields').addEventListener('input', event => { document.querySelectorAll('[data-field]').forEach(input => { input.checked = event.target.checked; }); buttons(); });
 if ($('#seek')) $('#seek').addEventListener('input', event => { if (metadata) { $('#video').currentTime = Number(event.target.value); if ($('#timestamp')) $('#timestamp').value = event.target.value; buttons(); } });
 $('#video').addEventListener('timeupdate', () => { if ($('#seek') && !busy) $('#seek').value = $('#video').currentTime; });
 if ($('#timestamp')) $('#timestamp').addEventListener('change', () => { if (metadata) $('#video').currentTime = Math.min(metadata.duration,Math.max(0, Number($('#timestamp').value))); });
