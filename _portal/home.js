@@ -11,15 +11,23 @@
   };
   const get = id => document.getElementById(id);
   const selectedTool = get('selected-tool');
-  selectedTool.addEventListener('change', () => {
+  function updateSelectedTool() {
     const item = tools[selectedTool.value];
     if (!item) return;
     get('selected-title').textContent = item[0];
     get('selected-description').textContent = item[1];
     get('selected-icon').src = `_portal/icons/${item[2]}.svg`;
     get('tool-link').href = `${selectedTool.value}/index.html`;
+    const metadataSelected = selectedTool.value === 'limpar-metadados-video';
+    document.querySelector('.tool-picker').classList.toggle('metadata-selected', metadataSelected);
+    get('picker-eyebrow').textContent = metadataSelected ? 'EM DESTAQUE \u00b7 PRIVACIDADE' : 'O QUE SEU V\u00cdDEO PRECISA?';
+    get('picker-heading').textContent = metadataSelected ? 'Limpar metadados de v\u00eddeo.' : 'Escolha o pr\u00f3ximo passo.';
+    get('tool-action-label').textContent = metadataSelected ? 'Inspecionar meu v\u00eddeo' : 'Ver ferramenta';
     get('tool-availability').lastChild.textContent = 'Dispon\u00edvel para teste local';
-  });
+  }
+  selectedTool.addEventListener('change', updateSelectedTool);
+  window.addEventListener('pageshow', updateSelectedTool);
+  updateSelectedTool();
   const normalize = value => value.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
   const search = get('tool-search');
   const cards = [...document.querySelectorAll('.tool-card')];

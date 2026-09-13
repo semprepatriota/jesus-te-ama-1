@@ -14,6 +14,8 @@ Concluir a pagina 404, testar a experiencia inteira e publicar uma versao recupe
 
 ## Regras
 
+- Revisao de escopo autorizada pelo usuario em 13/09/2026: publicar primeiro uma PREVIA PUBLICA no dominio para permitir teste fisico no celular e ajustes online. Esse modo e separado da producao indexavel, exige CI/build/inventario/hash/commit corretos, backup e envio manual, sem tags/anuncios/indexacao. Revisoes humanas e celular ficam pendentes apos esse envio; nao concluir a etapa nem emitir recibo de producao como se tivessem sido realizados.
+
 - Executar todos os criterios prePublishGates antes do envio; verificacao-online e feita depois.
 - Nenhum erro critico/importante aberto. Registrar limitacoes menores sem esconder testes nao realizados.
 - Testar em celular real disponivel; emulacao sozinha nao comprova desempenho no aparelho.
@@ -32,7 +34,7 @@ Concluir a pagina 404, testar a experiencia inteira e publicar uma versao recupe
 
 ## Bloqueios
 
-- Qualquer criterio previo ausente impede publicacao. Falha online impede concluir a etapa, mesmo com build aprovado.
+- Qualquer criterio previo ausente impede a publicacao FINAL INDEXAVEL. A previa publica autorizada segue a excecao registrada acima. Falha online impede concluir a etapa, mesmo com build aprovado.
 
 ## Evidencias
 

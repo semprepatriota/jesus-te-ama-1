@@ -46,6 +46,15 @@
 .video-status { color: #e3eccf; font-size: 11px; margin: 0; overflow-wrap: anywhere; }
 .video-status:not(:empty) { padding-bottom: 16px; }
 .tool-picker { padding: 30px; display: flex; flex-direction: column; min-width: 0; }
+.tool-picker.metadata-selected { background: #f0f8f5; box-shadow: inset 0 4px #16846d; }
+.metadata-selected > .eyebrow { color: #146553; }
+.metadata-selected .selected-icon { background: #d3eee3; }
+.metadata-selected .select-wrap select { border-color: #98c9b7; background: #fff; }
+.metadata-selected .primary-action { color: #fff; background: #146553; border-color: #146553; }
+.metadata-selected .primary-action:hover { background: #0d5142; }
+.metadata-selected .primary-action > img { filter: invert(1); }
+.selected-summary > div, .primary-action > span { min-width: 0; overflow-wrap: anywhere; }
+.primary-action > img { flex-shrink: 0; }
 .tool-picker h2 { font-size: 25px; line-height: 1.3; margin: 0 0 26px; font-weight: 800; max-width: 250px; }
 .picker-field > label { display: block; font-size: 11px; font-weight: 700; margin-bottom: 8px; color: #59625b; }
 .select-wrap { position: relative; }
@@ -78,6 +87,9 @@
 .tool-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 18px; align-items: stretch; }
 .tool-card { display: flex; flex-direction: column; min-width: 0; text-decoration: none; border: 1px solid #e1e5dc; border-radius: 7px; background: #fff; overflow: hidden; transition: border-color .15s, box-shadow .15s; }
 .tool-card:hover { border-color: #a6b69a; box-shadow: 0 5px 20px #20311c0a; }
+.tool-card.featured-tool { border-color: #16846d; box-shadow: inset 0 -3px #16846d; }
+.tool-card.featured-tool:hover { border-color: #0d5142; box-shadow: inset 0 -3px #16846d, 0 5px 20px #20311c0a; }
+.featured-tool .card-tag { color: #146553; }
 .card-visual { height: 145px; position: relative; overflow: hidden; margin: 7px 7px 0; border-radius: 3px; }
 .card-copy { padding: 16px 18px 18px; display: flex; flex-direction: column; flex: 1; }
 .card-title { display: flex; align-items: flex-start; gap: 10px; justify-content: space-between; }
