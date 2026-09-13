@@ -46,6 +46,17 @@ test('pacote publico e allowlist estrita e exclui desenvolvimento, backups e mid
   const files = packageFiles(routes, rules.compatibilityAliases, false); assert.equal(new Set(files).size, files.length);
   assert.ok(files.every(file => !/^media\/|\.portal-planejamento|node_modules|^src\/|^scripts\/|\.pdf$|\.map$|ASSETS.md/.test(file)));
   assert.ok(!files.includes('404.html') && !files.includes('ads.txt'));
+  const errorRoute = routes.find(route => route.group === 'error');
+  const errorHtml = fs.readFileSync(errorRoute.file, 'utf8');
+  for (const production of [false, true]) {
+    const tree = parse(prepareHtml(errorHtml, errorRoute, { production }));
+    assert.equal(attr(elements(tree, node => node.tagName === 'base')[0], 'href'), '/');
+    assert.equal(attr(elements(tree, node => node.tagName === 'meta' && attr(node, 'name') === 'robots')[0], 'content'), 'noindex, nofollow');
+    assert.ok(elements(tree, node => node.tagName === 'a').every(node => /^[/#]/.test(attr(node, 'href') || '')));
+    assert.ok(elements(tree, node => node.tagName === 'script').every(node => !attr(node, 'src') || attr(node, 'src').endsWith('_portal/measurement.js')));
+    assert.equal(elements(tree, node => node.tagName === 'h1').length, 1);
+  }
+  assert.ok(packageFiles(routes, rules.compatibilityAliases, true).includes('404.html'));
 });
 test('workflow tem validacao automatica e deploy manual com gate antes de upload dist', () => {
   const workflow = yaml(fs.readFileSync('.github/workflows/static.yml', 'utf8'));
