@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "updatedAt": "2026-09-13T01:09:16.924Z",
+  "stages": [
+    {
+      "id": 1,
+      "status": "done",
+      "completedAt": "2026-09-12T23:21:05.414Z",
+      "evidence": {
+        "file": ".portal-planejamento/evidencias/etapa-01-2026-09-12T23-10-56-457Z.json",
+        "sha256": "b70d000e3793325cfe050110e49632dfc5efdade6269f4d1451bbd878915d10d"
+      }
+    },
+    {
+      "id": 2,
+      "status": "done",
+      "completedAt": "2026-09-12T23:50:17.686Z",
+      "evidence": {
+        "file": ".portal-planejamento/evidencias/etapa-02-comprovacao-2026-09-12T23-48-56-052Z.json",
+        "sha256": "91aa07163b8a6d51847b4134d5e998cb6f26ac5eae3097ecb8e751e4a8ab6545"
+      }
+    },
+    {
+      "id": 3,
+      "status": "done",
+      "completedAt": "2026-09-13T00:33:02.499Z",
+      "evidence": {
+        "file": ".portal-planejamento/evidencias/etapa-03-avanco-2026-09-13T00-33-00-046Z.json",
+        "sha256": "a2ae4dd719e0be49705bd6d7e68d5ee058ee2f49b46add459ff8d043fe651af5"
+      }
+    },
+    {
+      "id": 4,
+      "status": "done",
+      "completedAt": "2026-09-13T00:47:57.384Z",
+      "evidence": {
+        "file": ".portal-planejamento/evidencias/etapa-04-conclusao-2026-09-13T00-47-42-474Z.json",
+        "sha256": "a164cd4d1995c2293fdcce1eefd12efa0549a36c305af29027f9237261dc386d"
+      }
+    },
+    {
+      "id": 5,
+      "status": "active",
+      "completedAt": null,
+      "evidence": null
+    },
+    {
+      "id": 6,
+      "status": "pending",
+      "completedAt": null,
+      "evidence": null
+    },
+    {
+      "id": 7,
+      "status": "pending",
+      "completedAt": null,
+      "evidence": null
+    },
+    {
+      "id": 8,
+      "status": "pending",
+      "completedAt": null,
+      "evidence": null
+    },
+    {
+      "id": 9,
+      "status": "pending",
+      "completedAt": null,
+      "evidence": null
+    },
+    {
+      "id": 10,
+      "status": "pending",
+      "completedAt": null,
+      "evidence": null
+    }
+  ]
+}

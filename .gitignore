@@ -1,0 +1,8 @@
+/atalhos/
+/output/
+/.playwright-cli/
+/node_modules/
+/dist/
+/.portal-planejamento/backups/
+/.portal-planejamento/evidencias/
+/.portal-planejamento/fixtures-etapa*/

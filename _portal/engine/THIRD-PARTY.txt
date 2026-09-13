@@ -1,0 +1,6 @@
+Mediabunny 1.56.2
+License: MPL-2.0
+Unmodified library source: https://registry.npmjs.org/mediabunny/-/mediabunny-1.56.2.tgz
+Repository: https://github.com/Vanilagy/mediabunny
+License text: mediabunny-LICENSE.txt
+Build tool: esbuild 0.28.2 (MIT), development only.

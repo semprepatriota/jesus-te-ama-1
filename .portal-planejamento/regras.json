@@ -1,0 +1,330 @@
+{
+  "schemaVersion": 1,
+  "project": "HF Ferramentas",
+  "canonicalOrigin": "https://www.hfnew.com.br",
+  "officialWorkspace": "F:/paginas-jesus-te-ama",
+  "expectedPageCount": 27,
+  "groups": {
+    "home": 1,
+    "tool": 7,
+    "hub": 1,
+    "guide": 10,
+    "trust": 7,
+    "error": 1
+  },
+  "constraints": {
+    "metadataScope": "video",
+    "filesProcessedLocally": true,
+    "uploadUserMedia": false,
+    "collectFilenamesOrMetadata": false,
+    "overwriteOriginalFiles": false,
+    "reelsTool": false,
+    "socialDownloader": false,
+    "rootIsCatalog": true,
+    "automaticPublishing": false,
+    "publicationGuard": "local-and-workflow-prepared",
+    "legacyFunnel": false,
+    "legacyTracking": false
+  },
+  "media": {
+    "initialContainers": [
+      "mp4",
+      "mov",
+      "webm"
+    ],
+    "compatibility": "Validar container E codec no navegador; suporte nao e universal.",
+    "defaultJobConcurrency": 1,
+    "limits": "Definir por testes na etapa 4; nao prometer arquivos ilimitados nem tamanho exato sem conferir a saida.",
+    "metadataPolicy": "Remover campos pessoais suportados; preservar parametros tecnicos de reproducao; verificar novamente; informar desconhecidos ou remanescentes; nao prometer anonimato."
+  },
+  "verification": {
+    "viewports": [
+      360,
+      390,
+      768,
+      1366,
+      1920
+    ],
+    "realMobileRequired": true,
+    "criticalOrMajorBugsAllowed": 0,
+    "evidenceRequired": true
+  },
+  "release": {
+    "artifactDirectory": "dist",
+    "legacyWorkflowPublishesRoot": false,
+    "ciGateInstalled": false,
+    "ciGatePrepared": true,
+    "remoteWorkflowVerified": false,
+    "excludeFromArtifact": [
+      ".git",
+      ".portal-planejamento",
+      ".claude",
+      "AGENTS.md",
+      "node_modules",
+      ".env",
+      "package.json",
+      "package-lock.json",
+      "build_ebook_7_oracoes.py",
+      "atalhos",
+      "output",
+      ".playwright-cli",
+      "media",
+      "ebook_7_oracoes.pdf.pdf",
+      "ebook_7_oracoes.pdf"
+    ],
+    "adSenseStatus": "not-configured",
+    "adSenseApprovalRequiredToShowAds": true
+  },
+  "phases": [
+    {
+      "id": 1,
+      "title": "Backup e base de recuperacao",
+      "pages": 0,
+      "file": "01-backup.md",
+      "gates": [
+        "inventario",
+        "backup-integridade",
+        "restauracao-ensaio",
+        "originais-preservados"
+      ],
+      "dependsOn": [],
+      "document": "etapas/01-backup.md"
+    },
+    {
+      "id": 2,
+      "title": "Limpeza e reaproveitamento das paginas",
+      "pages": 0,
+      "file": "02-limpeza-e-reaproveitamento.md",
+      "gates": [
+        "snapshot-conferido",
+        "paginas-reaproveitadas",
+        "integracoes-removidas",
+        "mapa-atualizado",
+        "navegacao-local"
+      ],
+      "dependsOn": [
+        1
+      ],
+      "document": "etapas/02-limpeza-e-reaproveitamento.md"
+    },
+    {
+      "id": 3,
+      "title": "Identidade visual e pagina principal",
+      "pages": 1,
+      "file": "03-identidade-e-home.md",
+      "gates": [
+        "home-catalogo",
+        "desktop-mobile",
+        "acessibilidade",
+        "revisao-visual"
+      ],
+      "dependsOn": [
+        2
+      ],
+      "document": "etapas/03-identidade-e-home.md"
+    },
+    {
+      "id": 4,
+      "title": "Motor local de processamento",
+      "pages": 0,
+      "file": "04-motor-local.md",
+      "gates": [
+        "compatibilidade",
+        "ciclo-processamento",
+        "privacidade-rede",
+        "limites-e-memoria",
+        "licencas"
+      ],
+      "dependsOn": [
+        3
+      ],
+      "document": "etapas/04-motor-local.md"
+    },
+    {
+      "id": 5,
+      "title": "Tres ferramentas iniciais",
+      "pages": 3,
+      "file": "05-ferramentas-iniciais.md",
+      "gates": [
+        "compressor",
+        "whatsapp",
+        "conversor-mp4",
+        "saidas-validadas"
+      ],
+      "dependsOn": [
+        4
+      ],
+      "document": "etapas/05-ferramentas-iniciais.md"
+    },
+    {
+      "id": 6,
+      "title": "Quatro ferramentas complementares",
+      "pages": 4,
+      "file": "06-ferramentas-complementares.md",
+      "gates": [
+        "corte",
+        "metadados-video",
+        "extracao-audio",
+        "captura-miniatura",
+        "saidas-validadas"
+      ],
+      "dependsOn": [
+        5
+      ],
+      "document": "etapas/06-ferramentas-complementares.md"
+    },
+    {
+      "id": 7,
+      "title": "Central de guias e dez artigos",
+      "pages": 11,
+      "file": "07-guias.md",
+      "gates": [
+        "dez-guias-completos",
+        "conteudo-revisado",
+        "links-contextuais",
+        "autoria-e-fontes"
+      ],
+      "dependsOn": [
+        6
+      ],
+      "document": "etapas/07-guias.md"
+    },
+    {
+      "id": 8,
+      "title": "Sete paginas de confianca",
+      "pages": 7,
+      "file": "08-confianca.md",
+      "gates": [
+        "sete-paginas",
+        "contato-real",
+        "privacidade-coerente",
+        "identidade-confirmada"
+      ],
+      "dependsOn": [
+        7
+      ],
+      "document": "etapas/08-confianca.md"
+    },
+    {
+      "id": 9,
+      "title": "SEO e medicao; preparacao AdSense",
+      "pages": 0,
+      "file": "09-seo-e-medicao.md",
+      "gates": [
+        "seo-e-sitemap",
+        "analytics-sem-dados-pessoais",
+        "consentimento",
+        "configuracao-anuncios",
+        "artefato-e-pipeline"
+      ],
+      "dependsOn": [
+        8
+      ],
+      "document": "etapas/09-seo-e-medicao.md"
+    },
+    {
+      "id": 10,
+      "title": "Erro 404, validacao final e publicacao",
+      "pages": 1,
+      "file": "10-validacao-e-publicacao.md",
+      "gates": [
+        "rotas-e-links",
+        "fluxos-completos",
+        "desktop-mobile-final",
+        "pacote-publicavel",
+        "recuperacao-pronta",
+        "verificacao-online"
+      ],
+      "prePublishGates": [
+        "rotas-e-links",
+        "fluxos-completos",
+        "desktop-mobile-final",
+        "pacote-publicavel",
+        "recuperacao-pronta"
+      ],
+      "dependsOn": [
+        9
+      ],
+      "document": "etapas/10-validacao-e-publicacao.md"
+    }
+  ],
+  "compatibilityAliases": [
+    {
+      "source": "funil 1/LP1_emocional_storytelling.html",
+      "target": "/comprimir-video/"
+    },
+    {
+      "source": "funil 1/LP1_MOBILE.html",
+      "target": "/video-para-whatsapp/"
+    },
+    {
+      "source": "funil 1/LP2_VSL_alta_conversao.html",
+      "target": "/converter-para-mp4/"
+    },
+    {
+      "source": "funil 1/LP3_isca_gratuita_captura.html",
+      "target": "/extrair-audio/"
+    },
+    {
+      "source": "funil 1/LP4_quiz_interativo.html",
+      "target": "/limpar-metadados-video/"
+    },
+    {
+      "source": "funil 1/LP6_vls1.html",
+      "target": "/cortar-video/"
+    },
+    {
+      "source": "funil 1/LP5_thankyou_upsell.html",
+      "target": "/capturar-miniatura/"
+    },
+    {
+      "source": "funil 1/obrigado.html",
+      "target": "/"
+    },
+    {
+      "source": "index-exemplos.html",
+      "target": "/"
+    },
+    {
+      "source": "privacidade.html",
+      "target": "/privacidade/"
+    }
+  ],
+  "scopeRevision": 2,
+  "stage2": {
+    "snapshotManifest": ".portal-planejamento/backups/antes-etapa-02-2026-09-12T23-36-33-140Z/manifesto.json",
+    "snapshotSha256": "2625bad71cdf6979d73ac254ae096c392639b1861eb5943aee45ca45bc6c25a2",
+    "legacyHtml": [
+      "index.html",
+      "funil 1/LP1_emocional_storytelling.html",
+      "funil 1/LP1_MOBILE.html",
+      "funil 1/LP2_VSL_alta_conversao.html",
+      "funil 1/LP3_isca_gratuita_captura.html",
+      "funil 1/LP4_quiz_interativo.html",
+      "funil 1/LP6_vls1.html",
+      "funil 1/LP5_thankyou_upsell.html",
+      "funil 1/obrigado.html",
+      "index-exemplos.html",
+      "privacidade.html"
+    ],
+    "preparedRoutes": [
+      "/",
+      "/comprimir-video/",
+      "/video-para-whatsapp/",
+      "/converter-para-mp4/",
+      "/cortar-video/",
+      "/limpar-metadados-video/",
+      "/extrair-audio/",
+      "/capturar-miniatura/",
+      "/privacidade/"
+    ],
+    "retiredAssets": [
+      "media/kit_familia_01.mp4",
+      "media/musica-quiz.mp3.mp3",
+      "ebook_7_oracoes.pdf.pdf",
+      "funil 1/ebook_7_oracoes.pdf",
+      "build_ebook_7_oracoes.py"
+    ],
+    "authorization": "Usuario autorizou remover o conteudo das paginas do funil e reaproveitar os arquivos para as novas ferramentas ao executar a etapa 2."
+  }
+}

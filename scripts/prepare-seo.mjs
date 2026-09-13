@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import { build } from 'esbuild';
+import { prepareHtml, sitemap, robots } from '../src/seo/html.mjs';
+const { routes } = JSON.parse(fs.readFileSync('.portal-planejamento/rotas.json', 'utf8'));
+const available = routes.filter(route => fs.existsSync(route.file));
+const prepared = available.map(route => [route.file, prepareHtml(fs.readFileSync(route.file, 'utf8'), route)]);
+for (const [file, html] of prepared) fs.writeFileSync(file, html);
+await build({ entryPoints: ['src/measurement/runtime.js'], outfile: '_portal/measurement.js', bundle: true, format: 'esm', platform: 'browser', target: 'es2022', minify: true });
+fs.writeFileSync('robots.txt', robots('https://www.hfnew.com.br', false));
+fs.writeFileSync('sitemap.xml', sitemap(available, 'https://www.hfnew.com.br', false));
+console.log(JSON.stringify({ preparedPages: available.length, indexedPreviewPages: 0, measurementEnabled: false, adsEnabled: false }));

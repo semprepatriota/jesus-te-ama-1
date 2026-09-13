@@ -1,43 +1,66 @@
-# Simple workflow for deploying static content to GitHub Pages
-name: Deploy static content to Pages
-
+name: Validate and Manually Release HF Ferramentas
 on:
-  # Runs on pushes targeting the default branch
   push:
-    branches: ["main"]
-
-  # Allows you to run this workflow manually from the Actions tab
+    branches: [main, 'codex/validacao-portal-*']
+  pull_request:
   workflow_dispatch:
-
-# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+    inputs:
+      release:
+        description: 'Publicar somente com comprovacao final aprovada'
+        type: boolean
+        default: false
+      evidence:
+        description: 'Caminho relativo da comprovacao da etapa 10'
+        type: string
+        default: ''
 permissions:
   contents: read
-  pages: write
-  id-token: write
-
-# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
-# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
 concurrency:
-  group: "pages"
+  group: pages
   cancel-in-progress: false
-
 jobs:
-  # Single deploy job since we're just deploying
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm test
+      - run: node scripts/verify-ci-plan.mjs
+      - run: npm run build
+      - run: npm run verify:public
+      - run: npm run verify:reproducible
   deploy:
+    if: github.event_name == 'workflow_dispatch' && inputs.release == true && github.ref == 'refs/heads/main'
+    needs: validate
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          # Upload entire repository
-          path: '.'
-      - name: Deploy to GitHub Pages
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node scripts/build-public.mjs --production
+      - run: node scripts/verify-public.mjs --production
+      - name: Gate Obrigatorio da Etapa 10
+        env:
+          RELEASE_EVIDENCE: ${{ inputs.evidence }}
+        run: node .portal-planejamento/scripts/verificar.mjs publicacao "$RELEASE_EVIDENCE" dist
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5

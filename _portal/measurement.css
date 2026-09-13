@@ -1,0 +1,8 @@
+.measurement-preferences { border: 1px solid #cbd2d0; border-radius: 8px; padding: 24px; width: min(480px, calc(100% - 32px)); max-height: calc(100dvh - 48px); overflow: auto; color: #20342e; background: #fff; }
+.measurement-preferences::backdrop { background: rgb(0 0 0 / 45%); }
+.measurement-preferences h2 { font-size: 22px; line-height: 1.25; margin: 0 0 16px; letter-spacing: 0; }
+.measurement-preferences p { font-size: 15px; line-height: 1.6; }
+.preference-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 20px; }
+.preference-actions button, .privacy-preference-button { min-height: 44px; padding: 10px 16px; border: 1px solid #b7c4bf; border-radius: 4px; font: inherit; font-size: 14px; background: #fff; color: #20342e; cursor: pointer; }
+.preference-actions button { flex: 1 1 170px; }
+.preference-actions button:focus-visible, .privacy-preference-button:focus-visible { outline: 3px solid #21886b; outline-offset: 3px; }

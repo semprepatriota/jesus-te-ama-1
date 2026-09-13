@@ -1,0 +1,248 @@
+{
+  "schemaVersion": 1,
+  "routes": [
+    {
+      "url": "/",
+      "title": "Inicio e catalogo",
+      "group": "home",
+      "stage": 3,
+      "file": "index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/comprimir-video/",
+      "title": "Comprimir video",
+      "group": "tool",
+      "stage": 5,
+      "file": "comprimir-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/video-para-whatsapp/",
+      "title": "Video para WhatsApp",
+      "group": "tool",
+      "stage": 5,
+      "file": "video-para-whatsapp/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/converter-para-mp4/",
+      "title": "Converter para MP4",
+      "group": "tool",
+      "stage": 5,
+      "file": "converter-para-mp4/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/cortar-video/",
+      "title": "Cortar video",
+      "group": "tool",
+      "stage": 6,
+      "file": "cortar-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/limpar-metadados-video/",
+      "title": "Limpar metadados de VIDEO",
+      "group": "tool",
+      "stage": 6,
+      "file": "limpar-metadados-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/extrair-audio/",
+      "title": "Extrair audio",
+      "group": "tool",
+      "stage": 6,
+      "file": "extrair-audio/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/capturar-miniatura/",
+      "title": "Capturar miniatura",
+      "group": "tool",
+      "stage": 6,
+      "file": "capturar-miniatura/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/",
+      "title": "Central de guias",
+      "group": "hub",
+      "stage": 7,
+      "file": "guias/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/comprimir-video-com-qualidade/",
+      "title": "Como reduzir o tamanho de um video e avaliar a qualidade",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/comprimir-video-com-qualidade/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-enviar-video-grande-no-whatsapp/",
+      "title": "Como preparar um video grande para compartilhar no WhatsApp",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-enviar-video-grande-no-whatsapp/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-converter-video-para-mp4/",
+      "title": "Como converter um video para MP4",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-converter-video-para-mp4/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-cortar-video-no-celular/",
+      "title": "Como cortar um video no celular",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-cortar-video-no-celular/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/o-que-sao-metadados-de-video/",
+      "title": "O que os metadados de um video podem revelar",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/o-que-sao-metadados-de-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-remover-metadados-de-video/",
+      "title": "Como remover e conferir metadados de um video",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-remover-metadados-de-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-extrair-audio-de-video/",
+      "title": "Como extrair audio de um video",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-extrair-audio-de-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-capturar-imagem-de-video/",
+      "title": "Como capturar uma imagem de um video",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-capturar-imagem-de-video/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/mp4-mov-ou-webm/",
+      "title": "MP4, MOV e WebM: formato e codec nao sao a mesma coisa",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/mp4-mov-ou-webm/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/guias/como-compartilhar-videos-com-privacidade/",
+      "title": "Cuidados ao compartilhar videos com dados pessoais",
+      "group": "guide",
+      "stage": 7,
+      "file": "guias/como-compartilhar-videos-com-privacidade/index.html",
+      "adsCandidate": true,
+      "indexable": true
+    },
+    {
+      "url": "/sobre/",
+      "title": "Sobre",
+      "group": "trust",
+      "stage": 8,
+      "file": "sobre/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/contato/",
+      "title": "Contato",
+      "group": "trust",
+      "stage": 8,
+      "file": "contato/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/privacidade/",
+      "title": "Privacidade",
+      "group": "trust",
+      "stage": 8,
+      "file": "privacidade/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/termos/",
+      "title": "Termos de uso",
+      "group": "trust",
+      "stage": 8,
+      "file": "termos/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/cookies/",
+      "title": "Cookies",
+      "group": "trust",
+      "stage": 8,
+      "file": "cookies/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/direitos-autorais/",
+      "title": "Direitos autorais",
+      "group": "trust",
+      "stage": 8,
+      "file": "direitos-autorais/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/seguranca-e-processamento-local/",
+      "title": "Seguranca e processamento local",
+      "group": "trust",
+      "stage": 8,
+      "file": "seguranca-e-processamento-local/index.html",
+      "adsCandidate": false,
+      "indexable": true
+    },
+    {
+      "url": "/404.html",
+      "title": "Pagina nao encontrada",
+      "group": "error",
+      "stage": 10,
+      "file": "404.html",
+      "adsCandidate": false,
+      "indexable": false
+    }
+  ]
+}
