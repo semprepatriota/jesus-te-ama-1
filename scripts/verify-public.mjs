@@ -4,11 +4,14 @@ import crypto from 'node:crypto';
 import { parse } from 'parse5';
 import { elements, attr, text, robots, sitemap } from '../src/seo/html.mjs';
 import { packageFiles } from '../src/release/inventory.mjs';
+import { canIndexRoute, requireIndexedToolsApproval } from '../src/seo/indexing.mjs';
 const fail = message => { throw new Error(message); };
-export function verifyPublic(root, { production = false, publicPreview = false } = {}) {
+export function verifyPublic(root, { production = false, publicPreview = false, indexedTools = false } = {}) {
+  if (indexedTools && (!publicPreview || production)) fail('Indexacao seletiva exige previa publica separada da producao.');
   if (production && publicPreview) fail('Modos de publicacao mutuamente exclusivos.');
   const rules = JSON.parse(fs.readFileSync('.portal-planejamento/regras.json', 'utf8'));
   const { routes } = JSON.parse(fs.readFileSync('.portal-planejamento/rotas.json', 'utf8'));
+  if (indexedTools) requireIndexedToolsApproval(rules, routes);
   const expected = packageFiles(routes, rules.compatibilityAliases, production, publicPreview), actual = [];
   function walk(dir, parent = '') { for (const entry of fs.readdirSync(dir, { withFileTypes: true })) { const name = parent + entry.name; if (entry.isSymbolicLink()) fail(`Link simbolico: ${name}`); if (entry.isDirectory()) { if (!expected.some(file => file.startsWith(name + '/'))) fail(`Inventario: pasta inesperada ${name}`); walk(path.join(dir, entry.name), name + '/'); } else if (entry.isFile()) actual.push(name); else fail(`Tipo invalido: ${name}`); } }
   walk(root); actual.sort();
@@ -23,7 +26,7 @@ export function verifyPublic(root, { production = false, publicPreview = false }
     const canonical = attr(one('link', 'rel', 'canonical'), 'href');
     if (canonical !== new URL(route.url, rules.canonicalOrigin).href || canonicals.has(canonical)) fail(`Canonical invalido: ${route.file}`);
     canonicals.add(canonical);
-    if (attr(one('meta', 'name', 'robots'), 'content') !== (production && route.indexable ? 'index, follow' : 'noindex, nofollow')) fail(`Indexacao divergente: ${route.file}`);
+    if (attr(one('meta', 'name', 'robots'), 'content') !== (canIndexRoute(route, { production, indexedTools }) ? 'index, follow' : 'noindex, nofollow')) fail(`Indexacao divergente: ${route.file}`);
     const graph = JSON.parse(text(one('script', 'type', 'application/ld+json')));
     if (graph.url !== canonical || graph.name !== title || graph.description !== description || graph['@context'] !== 'https://schema.org') fail(`Schema divergente: ${route.file}`);
     one('h1');
@@ -36,7 +39,13 @@ export function verifyPublic(root, { production = false, publicPreview = false }
       if (!actual.includes(file)) fail(`Link/recurso ausente ${route.file}: ${file}`);
     }
   }
-  if (fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8') !== sitemap(routes, rules.canonicalOrigin, production) || fs.readFileSync(path.join(root, 'robots.txt'), 'utf8') !== robots(rules.canonicalOrigin, production)) fail('Sitemap/robots divergentes do modo.');
+  for (const alias of rules.compatibilityAliases) {
+    const tree = parse(fs.readFileSync(path.join(root, alias.source), 'utf8'));
+    const meta = elements(tree, node => node.tagName === 'meta' && attr(node, 'name') === 'robots');
+    const canonical = elements(tree, node => node.tagName === 'link' && attr(node, 'rel') === 'canonical');
+    if (meta.length !== 1 || attr(meta[0], 'content') !== 'noindex, nofollow' || canonical.length !== 1 || attr(canonical[0], 'href') !== rules.canonicalOrigin + alias.target) fail(`Alias indexavel ou canonica divergente: ${alias.source}`);
+  }
+  if (fs.readFileSync(path.join(root, 'sitemap.xml'), 'utf8') !== sitemap(routes, rules.canonicalOrigin, production, indexedTools) || fs.readFileSync(path.join(root, 'robots.txt'), 'utf8') !== robots(rules.canonicalOrigin, production, indexedTools)) fail('Sitemap/robots divergentes do modo.');
   if (fs.readFileSync(path.join(root, 'CNAME'), 'utf8').trim() !== new URL(rules.canonicalOrigin).hostname) fail('CNAME divergente.');
   for (const file of actual.filter(file => /\.(js|html|txt)$/i.test(file))) {
     const source = fs.readFileSync(path.join(root, file), 'utf8');
@@ -44,9 +53,10 @@ export function verifyPublic(root, { production = false, publicPreview = false }
   }
   const hash = crypto.createHash('sha256');
   for (const file of actual) hash.update(JSON.stringify([file, crypto.createHash('sha256').update(fs.readFileSync(path.join(root, file))).digest('hex')]) + '\n');
-  return { passed: true, mode: production ? 'production' : publicPreview ? 'public-preview' : 'preview', files: actual.length, pages: canonicals.size, sha256: hash.digest('hex'), publishable: false, note: 'Integridade tecnica nao substitui autorizacao de envio; previa publica nao conclui homologacao final.' };
+  const indexedUrls = routes.filter(route => canIndexRoute(route, { production, indexedTools })).map(route => route.url).sort();
+  return { passed: true, mode: production ? 'production' : indexedTools ? 'public-preview-indexed-tools' : publicPreview ? 'public-preview' : 'preview', files: actual.length, pages: canonicals.size, indexedPages: indexedUrls.length, indexedUrls, sha256: hash.digest('hex'), publishable: false, note: 'Integridade tecnica nao substitui autorizacao de envio; previa publica nao conclui homologacao final.' };
 }
 if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/verify-public.mjs')) {
   const publicPreview = process.argv.includes('--public-preview');
-  console.log(JSON.stringify(verifyPublic(path.resolve(publicPreview ? 'dist-public-preview' : 'dist'), { production: process.argv.includes('--production'), publicPreview }), null, 2));
+  console.log(JSON.stringify(verifyPublic(path.resolve(publicPreview ? 'dist-public-preview' : 'dist'), { production: process.argv.includes('--production'), publicPreview, indexedTools: process.argv.includes('--indexed-tools') }), null, 2));
 }

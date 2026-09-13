@@ -6,7 +6,11 @@ on:
   workflow_dispatch:
     inputs:
       public_preview:
-        description: 'Publicar previa autorizada, sem indexacao/anuncios; homologacao final online'
+        description: 'Publicar previa autorizada sem anuncios; homologacao final online'
+        type: boolean
+        default: false
+      index_tools:
+        description: 'Indexar somente home e sete ferramentas, com autorizacao especifica'
         type: boolean
         default: false
       preview_commit:
@@ -48,6 +52,9 @@ jobs:
       - run: node scripts/build-public.mjs --public-preview
       - run: node scripts/verify-public.mjs --public-preview
       - run: node scripts/verify-reproducible.mjs --public-preview
+      - run: node scripts/build-public.mjs --public-preview --indexed-tools
+      - run: node scripts/verify-public.mjs --public-preview --indexed-tools
+      - run: node scripts/verify-reproducible.mjs --public-preview --indexed-tools
   deploy-preview:
     if: github.event_name == 'workflow_dispatch' && inputs.public_preview == true && inputs.release != true && github.ref == 'refs/heads/main'
     needs: validate
@@ -66,10 +73,19 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
-      - run: node scripts/build-public.mjs --public-preview
+      - name: Construir Escopo Autorizado
+        env:
+          PREVIEW_INDEX_TOOLS: ${{ inputs.index_tools }}
+        run: |
+          if [ "$PREVIEW_INDEX_TOOLS" = "true" ]; then
+            node scripts/build-public.mjs --public-preview --indexed-tools
+          else
+            node scripts/build-public.mjs --public-preview
+          fi
       - name: Conferir Autorizacao e Pacote da Previa
         env:
           PREVIEW_APPROVED: ${{ inputs.public_preview }}
+          PREVIEW_INDEX_TOOLS: ${{ inputs.index_tools }}
           PREVIEW_COMMIT: ${{ inputs.preview_commit }}
           PREVIEW_SHA256: ${{ inputs.preview_sha256 }}
         run: node scripts/verify-preview-release.mjs
@@ -81,7 +97,7 @@ jobs:
         id: deployment
         uses: actions/deploy-pages@v5
   deploy:
-    if: github.event_name == 'workflow_dispatch' && inputs.release == true && inputs.public_preview != true && github.ref == 'refs/heads/main'
+    if: github.event_name == 'workflow_dispatch' && inputs.release == true && inputs.public_preview != true && inputs.index_tools != true && github.ref == 'refs/heads/main'
     needs: validate
     runs-on: ubuntu-latest
     permissions:

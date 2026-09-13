@@ -1,4 +1,5 @@
 import { parse, parseFragment, serializeOuter } from 'parse5';
+import { canIndexRoute } from './indexing.mjs';
 export const attr = (node, name) => node.attrs?.find(item => item.name === name)?.value;
 export function elements(node, predicate) { const result = []; function visit(item) { if (predicate(item)) result.push(item); for (const child of item.childNodes ?? []) visit(child); } visit(node); return result; }
 export const text = node => node.nodeName === '#text' ? node.value : (node.childNodes ?? []).map(text).join('');
@@ -14,7 +15,8 @@ const descriptions = {
   '/capturar-miniatura/': 'Escolha um momento do vídeo e capture um quadro para baixar em PNG ou JPEG. Veja a imagem real antes do download, com processamento no navegador.'
 };
 
-export function prepareHtml(html, route, { origin = 'https://www.hfnew.com.br', production = false } = {}) {
+export function prepareHtml(html, route, { origin = 'https://www.hfnew.com.br', production = false, indexedTools = false } = {}) {
+  const indexable = canIndexRoute(route, { production, indexedTools });
   const tree = parse(html, { sourceCodeLocationInfo: true });
   const head = elements(tree, node => node.tagName === 'head')[0];
   const title = elements(head, node => node.tagName === 'title')[0];
@@ -33,15 +35,15 @@ export function prepareHtml(html, route, { origin = 'https://www.hfnew.com.br', 
   }
   head.childNodes = head.childNodes.filter(node => !managed(node));
   const base = '../'.repeat(route.file.split('/').length - 1);
-  const fragment = parseFragment(`<meta name="portal-seo-stage" content="9"><meta name="description" content="${escape(description)}"><meta name="robots" content="${production && route.indexable ? 'index, follow' : 'noindex, nofollow'}"><link rel="canonical" href="${escape(canonical)}"><meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="HF Ferramentas"><meta property="og:title" content="${escape(name)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${escape(canonical)}"><meta property="og:image" content="${origin}/_portal/amostra.jpg"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">${JSON.stringify(graph).replaceAll('<', '\\u003c')}</script><link rel="stylesheet" href="${base}_portal/measurement.css"><script type="module" src="${base}_portal/measurement.js"></script>`);
+  const fragment = parseFragment(`<meta name="portal-seo-stage" content="9"><meta name="description" content="${escape(description)}"><meta name="robots" content="${indexable ? 'index, follow' : 'noindex, nofollow'}"><link rel="canonical" href="${escape(canonical)}"><meta property="og:type" content="website"><meta property="og:locale" content="pt_BR"><meta property="og:site_name" content="HF Ferramentas"><meta property="og:title" content="${escape(name)}"><meta property="og:description" content="${escape(description)}"><meta property="og:url" content="${escape(canonical)}"><meta property="og:image" content="${origin}/_portal/amostra.jpg"><meta name="twitter:card" content="summary_large_image"><script type="application/ld+json">${JSON.stringify(graph).replaceAll('<', '\\u003c')}</script><link rel="stylesheet" href="${base}_portal/measurement.css"><script type="module" src="${base}_portal/measurement.js"></script>`);
   for (const node of fragment.childNodes) { node.parentNode = head; head.childNodes.push(node); }
   const location = head.sourceCodeLocation;
   const serialized = serializeOuter(head).replace(/[ \t]+(?=\r?$)/gm, '');
   return html.slice(0, location.startOffset) + serialized + html.slice(location.endOffset);
 }
 
-export function sitemap(routes, origin, production) {
-  const entries = production ? routes.filter(route => route.indexable).map(route => `<url><loc>${escape(new URL(route.url, origin).href)}</loc></url>`).join('\n') : '';
+export function sitemap(routes, origin, production, indexedTools = false) {
+  const entries = routes.filter(route => canIndexRoute(route, { production, indexedTools })).map(route => `<url><loc>${escape(new URL(route.url, origin).href)}</loc></url>`).join('\n');
   return `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${entries}\n</urlset>\n`;
 }
-export function robots(origin, production) { return production ? `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n'; }
+export function robots(origin, production, indexedTools = false) { return production || indexedTools ? `User-agent: *\nAllow: /\nSitemap: ${origin}/sitemap.xml\n` : 'User-agent: *\nDisallow: /\n'; }

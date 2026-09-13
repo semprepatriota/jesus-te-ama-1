@@ -50,6 +50,9 @@
     "evidenceRequired": true
   },
   "release": {
+    "indexedToolsApprovedByUser": true,
+    "indexedToolsApprovalDate": "2026-09-13",
+    "indexedToolsApprovalScope": "Home e sete ferramentas; guias e demais paginas pendentes continuam noindex. Nao conclui homologacao final.",
     "publicPreviewApprovedByUser": true,
     "publicPreviewApprovalDate": "2026-09-13",
     "publicPreviewFinalReviews": "after-publication-by-user-request",

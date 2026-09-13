@@ -14,6 +14,8 @@ Concluir a pagina 404, testar a experiencia inteira e publicar uma versao recupe
 
 ## Regras
 
+- Revisao adicional autorizada em 13/09/2026: indexacao seletiva da home e sete ferramentas, com opcao manual index_tools, autorizacao especifica e pacote/commit conferidos. Isso nao homologa guias/politicas/celulares nem conclui etapas pendentes; gate assinado da producao final permanece intacto. Guias, confianca, aliases e 404 continuam noindex, e sitemap inclui somente as oito canonicas autorizadas.
+
 - Revisao de escopo autorizada pelo usuario em 13/09/2026: publicar primeiro uma PREVIA PUBLICA no dominio para permitir teste fisico no celular e ajustes online. Esse modo e separado da producao indexavel, exige CI/build/inventario/hash/commit corretos, backup e envio manual, sem tags/anuncios/indexacao. Revisoes humanas e celular ficam pendentes apos esse envio; nao concluir a etapa nem emitir recibo de producao como se tivessem sido realizados.
 
 - Executar todos os criterios prePublishGates antes do envio; verificacao-online e feita depois.
