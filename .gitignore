@@ -3,6 +3,7 @@
 /.playwright-cli/
 /node_modules/
 /dist/
+/dist-public-preview/
 /.portal-planejamento/backups/
 /.portal-planejamento/evidencias/
 /.portal-planejamento/fixtures-etapa*/

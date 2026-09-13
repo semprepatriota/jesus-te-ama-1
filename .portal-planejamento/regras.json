@@ -50,6 +50,9 @@
     "evidenceRequired": true
   },
   "release": {
+    "publicPreviewApprovedByUser": true,
+    "publicPreviewApprovalDate": "2026-09-13",
+    "publicPreviewFinalReviews": "after-publication-by-user-request",
     "artifactDirectory": "dist",
     "legacyWorkflowPublishesRoot": false,
     "ciGateInstalled": false,

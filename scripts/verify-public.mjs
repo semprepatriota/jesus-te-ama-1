@@ -5,15 +5,16 @@ import { parse } from 'parse5';
 import { elements, attr, text, robots, sitemap } from '../src/seo/html.mjs';
 import { packageFiles } from '../src/release/inventory.mjs';
 const fail = message => { throw new Error(message); };
-export function verifyPublic(root, { production = false } = {}) {
+export function verifyPublic(root, { production = false, publicPreview = false } = {}) {
+  if (production && publicPreview) fail('Modos de publicacao mutuamente exclusivos.');
   const rules = JSON.parse(fs.readFileSync('.portal-planejamento/regras.json', 'utf8'));
   const { routes } = JSON.parse(fs.readFileSync('.portal-planejamento/rotas.json', 'utf8'));
-  const expected = packageFiles(routes, rules.compatibilityAliases, production), actual = [];
+  const expected = packageFiles(routes, rules.compatibilityAliases, production, publicPreview), actual = [];
   function walk(dir, parent = '') { for (const entry of fs.readdirSync(dir, { withFileTypes: true })) { const name = parent + entry.name; if (entry.isSymbolicLink()) fail(`Link simbolico: ${name}`); if (entry.isDirectory()) { if (!expected.some(file => file.startsWith(name + '/'))) fail(`Inventario: pasta inesperada ${name}`); walk(path.join(dir, entry.name), name + '/'); } else if (entry.isFile()) actual.push(name); else fail(`Tipo invalido: ${name}`); } }
   walk(root); actual.sort();
   if (JSON.stringify(actual) !== JSON.stringify(expected)) fail('Inventario do pacote divergente; arquivo ausente ou interno/inesperado.');
   const titles = new Set(), canonicals = new Set();
-  for (const route of routes.filter(route => production || route.group !== 'error')) {
+  for (const route of routes.filter(route => production || publicPreview || route.group !== 'error')) {
     const html = fs.readFileSync(path.join(root, route.file), 'utf8'), tree = parse(html);
     const one = (tag, key, value) => { const list = elements(tree, node => node.tagName === tag && (!key || attr(node, key) === value)); if (list.length !== 1) fail(`Elemento ${tag}/${value} deve ser unico: ${route.file}`); return list[0]; };
     const title = text(one('title')).trim(), description = attr(one('meta', 'name', 'description'), 'content');
@@ -43,6 +44,9 @@ export function verifyPublic(root, { production = false } = {}) {
   }
   const hash = crypto.createHash('sha256');
   for (const file of actual) hash.update(JSON.stringify([file, crypto.createHash('sha256').update(fs.readFileSync(path.join(root, file))).digest('hex')]) + '\n');
-  return { passed: true, mode: production ? 'production' : 'preview', files: actual.length, pages: canonicals.size, sha256: hash.digest('hex'), publishable: false, note: 'Integridade tecnica nao substitui comprovacao e gate da etapa 10.' };
+  return { passed: true, mode: production ? 'production' : publicPreview ? 'public-preview' : 'preview', files: actual.length, pages: canonicals.size, sha256: hash.digest('hex'), publishable: false, note: 'Integridade tecnica nao substitui autorizacao de envio; previa publica nao conclui homologacao final.' };
 }
-if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/verify-public.mjs')) console.log(JSON.stringify(verifyPublic(path.resolve('dist'), { production: process.argv.includes('--production') }), null, 2));
+if (process.argv[1] && path.resolve(process.argv[1]) === path.resolve('scripts/verify-public.mjs')) {
+  const publicPreview = process.argv.includes('--public-preview');
+  console.log(JSON.stringify(verifyPublic(path.resolve(publicPreview ? 'dist-public-preview' : 'dist'), { production: process.argv.includes('--production'), publicPreview }), null, 2));
+}

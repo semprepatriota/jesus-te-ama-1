@@ -14,7 +14,7 @@ test('sete paginas de confianca correspondem ao inventario', () => {
     const html = fs.readFileSync(`${page.slug}/index.html`, 'utf8');
     assert.ok(html.includes('portal-stage" content="8"'));
     assert.ok(html.includes('noindex, nofollow'));
-    assert.ok(html.includes('revis&atilde;o final'));
+    assert.ok(html.includes('revis&otilde;es finais ainda pendentes'));
   }
 });
 test('identidade e contato possuem aprovacao explicita sem dado de login', () => {
